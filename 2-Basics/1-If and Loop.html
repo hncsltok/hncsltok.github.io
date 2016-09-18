@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>If Statement</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h2 id="if-statement"><a class="header-link" href="#if-statement"></a>If Statement</h2>
+<p>The statements inside <code>{}</code> are executed if the expression
+inside <code>()</code> is true, and will be skipped if the expression is false.</p>
+<p><code>if (&lt;expression&gt;) { &lt;statements&gt; }</code></p>
+<pre class="hljs"><code>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    put_string(<span class="hljs-string">"input an interger: "</span>);
+    <span class="hljs-keyword">int</span> x = get_int();
+
+    <span class="hljs-keyword">if</span>(x &lt; <span class="hljs-number">0</span>) {
+        x = -x;
+    }
+
+    put_string(<span class="hljs-string">"The absolute value of it is : "</span>);
+    put_int(x);
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><p>All <strong>non-zero value</strong> is regarded as true 
+while <strong>zero value</strong> is regarded as false.</p>
+<table>
+<tr>
+    <th>Zero Value</th>
+    <th>Non-Zero Value</th>
+</tr>
+<tr>
+    <td><code>false</code> <code>0</code> &#39;\0&#39; <code>&quot;&quot;</code></td>
+    <td><code>true</code> <code>1</code> &#39;a&#39; <code>&quot; &quot;</code></td>
+</tr>
+</table>
+
+<pre class="hljs"><code>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">if</span>(<span class="hljs-number">1</span>) {
+        put_string(<span class="hljs-string">"`1` is regarded as true!\n"</span>);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><h2 id="if-else-statement"><a class="header-link" href="#if-else-statement"></a>If-Else Statement</h2>
+<p><code>if (&lt;expression&gt;) { &lt;statements&gt; } else { &lt;statements&gt; }</code></p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    put_string(<span class="hljs-string">"Welcome to Litan\'s Secret Database.\n"</span>);
+    put_string(<span class="hljs-string">"Password:"</span>);
+    <span class="hljs-keyword">int</span> password = get_int();
+
+    <span class="hljs-keyword">if</span>(password == <span class="hljs-number">2333</span>) {
+        put_string(<span class="hljs-string">"Access Granted"</span>);
+    }
+    <span class="hljs-keyword">else</span> {
+        put_string(<span class="hljs-string">"Access Denied"</span>);
+    }
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><h2 id="while-statement"><a class="header-link" href="#while-statement"></a>While Statement</h2>
+<p><code>while (&lt;expression&gt;) { &lt;statements&gt; }</code></p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    put_string(<span class="hljs-string">"Input numbers to sum them up."</span>);
+    warp();
+
+    <span class="hljs-keyword">int</span> inputted = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">while</span>(inputted) {
+        inputted = get_int();
+        sum += inputted;
+
+        put_string(<span class="hljs-string">"Now the sum is "</span>);
+        put_int(sum);
+        warp();
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    put_string(<span class="hljs-string">"All fibonacci numbers below 100 are: "</span>);
+    warp();
+
+    <span class="hljs-keyword">int</span> n = <span class="hljs-number">100</span>;
+
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> b = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> new_a;
+    <span class="hljs-keyword">int</span> new_b;
+
+    <span class="hljs-keyword">while</span> (a &lt; <span class="hljs-number">100</span>) {
+        put_int(a);
+        warp();
+
+        new_a = b;
+        new_b = a + b;
+
+        a = new_a;
+        b = new_b;
+    }
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>    </article>
+  </body>
+</html>

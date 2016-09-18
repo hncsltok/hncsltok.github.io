@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Operator</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="main.css">
+
+<h2 id="operator"><a class="header-link" href="#operator"></a>Operator</h2>
+<p>Operator is a kind of token.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// arithmetic operator</span>
+    <span class="hljs-number">1</span> + <span class="hljs-number">1</span>; <span class="hljs-comment">// 2</span>
+    <span class="hljs-number">3</span> * <span class="hljs-number">4</span>; <span class="hljs-comment">// 12</span>
+    <span class="hljs-number">14</span> / <span class="hljs-number">3</span>; <span class="hljs-comment">// 4</span>
+    <span class="hljs-number">11</span> % <span class="hljs-number">3</span>; <span class="hljs-comment">// 2</span>
+
+    <span class="hljs-comment">// comparative operator</span>
+    <span class="hljs-number">5</span> &lt; <span class="hljs-number">6</span>; <span class="hljs-comment">// true</span>
+    <span class="hljs-number">5</span> &gt;= <span class="hljs-number">6</span>; <span class="hljs-comment">// false</span>
+    <span class="hljs-number">5</span> == <span class="hljs-number">6</span>; <span class="hljs-comment">// false</span>
+    <span class="hljs-number">5</span> != <span class="hljs-number">6</span>; <span class="hljs-comment">// true</span>
+
+    <span class="hljs-comment">// logic operator</span>
+    !<span class="hljs-literal">true</span>; <span class="hljs-comment">// false</span>
+    !<span class="hljs-literal">false</span>; <span class="hljs-comment">// true</span>
+    <span class="hljs-literal">true</span> &amp;&amp; <span class="hljs-literal">false</span>; <span class="hljs-comment">// false</span>
+    <span class="hljs-literal">true</span> || <span class="hljs-literal">false</span>; <span class="hljs-comment">// true</span>
+
+    <span class="hljs-keyword">return</span> ;
+}</code></pre><p>Operant are literals or variable </p>
+<p>A unary operator is used in syntax like <code>&lt;operator&gt; &lt;operant&gt;</code>
+or <code>&lt;operant&gt; &lt;operator&gt;</code>.</p>
+<blockquote>
+<p><code>+3</code> <code>!true</code> <code>&amp;some_variable</code></p>
+</blockquote>
+<p>A binary operator is used as <code>&lt;left operant&gt; &lt;operator&gt; &lt;right operant&gt;</code>.</p>
+<blockquote>
+<p><code>2 + 3</code> <code>5 != 6</code> <code>true || false</code> <code>pi = 3.14</code></p>
+</blockquote>
+<table>
+<tr>
+    <td><strong>arithmetic operator</strong></td>
+    <td>+ - * / %</td>
+</tr>
+<tr>
+    <td><strong>comparative operator</strong></td>
+    <td>== != &gt; &lt; &gt;= &lt;=</td>
+</tr>
+<tr>
+    <td><strong>logic operator</strong></td>
+    <td>! &amp;&amp; ||</td>
+</tr>
+<tr>
+    <td><strong>assignment operator</strong></td>
+    <td>= += -= *= /= %= ++ --</td>
+</tr>
+<tr>
+    <td><strong>content and address operator</strong></td>
+    <td>* &amp;</td>
+</tr>
+<tr>
+    <td><strong>braces operator</strong></td>
+    <td>[] ()</td>
+</tr>
+</table>
+
+
+<h2 id="playing-with-array-and-pointer-using-"><a class="header-link" href="#playing-with-array-and-pointer-using-"></a>Playing with Array and Pointer using <code>* &amp; []</code></h2>
+<blockquote>
+<p class="img-container"><img src="../../graph/tree.svg" class="limited"/></p>
+</blockquote>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// Step 0 - Initialization</span>
+
+    <span class="hljs-comment">// declare an array to int with size 3, named `a`</span>
+    <span class="hljs-keyword">int</span> a[<span class="hljs-number">3</span>];
+    <span class="hljs-comment">// `a[i]` is the `i`th element in the array `a`</span>
+    <span class="hljs-comment">// assign value to each element of the array</span>
+    a[<span class="hljs-number">0</span>] = <span class="hljs-number">1997</span>;
+    a[<span class="hljs-number">1</span>] = <span class="hljs-number">11</span>;
+    a[<span class="hljs-number">2</span>] = <span class="hljs-number">11</span>;
+
+    <span class="hljs-comment">// declare an pointer to int, named `p`</span>
+    <span class="hljs-keyword">int</span> *p;
+    <span class="hljs-comment">// assign the address of the first element in the array </span>
+    p = &amp;a[<span class="hljs-number">0</span>];
+
+
+    <span class="hljs-comment">// Step 1 - Playing Array and Pointer Separately</span>
+
+    <span class="hljs-comment">// playing with array</span>
+    <span class="hljs-comment">// get value from array by `[]` operator</span>
+    a[<span class="hljs-number">0</span>]; <span class="hljs-comment">// 1997</span>
+    a[<span class="hljs-number">1</span>]; <span class="hljs-comment">// 11</span>
+    a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// 11</span>
+    a[<span class="hljs-number">3</span>]; <span class="hljs-comment">// undefined, index out of bound</span>
+    <span class="hljs-comment">// set value of birthday to lunar </span>
+    a[<span class="hljs-number">1</span>] = <span class="hljs-number">10</span>;
+    a[<span class="hljs-number">2</span>] = <span class="hljs-number">12</span>;
+
+
+    <span class="hljs-comment">// checking `p` is equal to `&amp;a[0]`</span>
+    p == &amp;a[<span class="hljs-number">0</span>]; <span class="hljs-comment">// true</span>
+    (p + <span class="hljs-number">1</span>) == &amp;a[<span class="hljs-number">1</span>]; <span class="hljs-comment">// true</span>
+    (p + <span class="hljs-number">2</span>) == &amp;a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// true</span>
+    *p == a[<span class="hljs-number">0</span>]; <span class="hljs-comment">// true</span>
+    *(p + <span class="hljs-number">1</span>) == a[<span class="hljs-number">1</span>]; <span class="hljs-comment">// true</span>
+    *(p + <span class="hljs-number">2</span>) == a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// true</span>
+
+
+    <span class="hljs-comment">// playing with pointer</span>
+    *p; <span class="hljs-comment">// 1997</span>
+    *(p + <span class="hljs-number">1</span>); <span class="hljs-comment">// 10</span>
+    *(p + <span class="hljs-number">2</span>); <span class="hljs-comment">// 12</span>
+    <span class="hljs-comment">// set value of birthday back to geogorian</span>
+    *(p + <span class="hljs-number">1</span>) = <span class="hljs-number">11</span>;
+    *(p + <span class="hljs-number">2</span>) = <span class="hljs-number">11</span>;
+
+
+    <span class="hljs-comment">// Step 2 - Playing Array and Pointer with Each Other</span>
+
+    <span class="hljs-comment">// checking `p` is equal to `a`</span>
+    p == a; <span class="hljs-comment">// true</span>
+    p + <span class="hljs-number">1</span> == a + <span class="hljs-number">1</span>; <span class="hljs-comment">// true</span>
+    p + <span class="hljs-number">2</span> == a + <span class="hljs-number">2</span>; <span class="hljs-comment">// true</span>
+
+    <span class="hljs-comment">// playing array as an pointer</span>
+    *(a + <span class="hljs-number">1</span>); <span class="hljs-comment">// 11</span>
+    *(a + <span class="hljs-number">2</span>); <span class="hljs-comment">// 11</span>
+    *(a + <span class="hljs-number">1</span>) = <span class="hljs-number">10</span>;
+    *(a + <span class="hljs-number">2</span>) = <span class="hljs-number">12</span>;
+
+    <span class="hljs-comment">// playing pointer as an array</span>
+    <span class="hljs-comment">// `a[i]` is equivalent to `*(a + i)`</span>
+    p[<span class="hljs-number">0</span>]; <span class="hljs-comment">// 1997</span>
+    p[<span class="hljs-number">1</span>]; <span class="hljs-comment">// 11</span>
+    p[<span class="hljs-number">2</span>]; <span class="hljs-comment">// 11</span>
+    p[<span class="hljs-number">1</span>] = <span class="hljs-number">10</span>;
+    p[<span class="hljs-number">2</span>] = <span class="hljs-number">12</span>;
+
+
+    <span class="hljs-comment">// Step 3 - Modifing Pointer</span>
+    <span class="hljs-comment">// let p points to another place</span>
+    p = &amp;a[<span class="hljs-number">1</span>];
+    *p; <span class="hljs-comment">// 10</span>
+    *(p - <span class="hljs-number">1</span>); <span class="hljs-comment">// 1997</span>
+    *(p + <span class="hljs-number">1</span>); <span class="hljs-comment">// 12</span>
+    *(p + <span class="hljs-number">2</span>); <span class="hljs-comment">// error</span>
+
+    p = p + <span class="hljs-number">1</span>;
+    *(p - <span class="hljs-number">2</span>); <span class="hljs-comment">// 1997</span>
+    *(p - <span class="hljs-number">1</span>); <span class="hljs-comment">// 10</span>
+    *p; <span class="hljs-comment">// 12</span>
+    *(p + <span class="hljs-number">1</span>); <span class="hljs-comment">// error</span>
+
+    <span class="hljs-comment">// set p back to ;</span>
+    p = a;
+
+
+    <span class="hljs-comment">// Step 4 - Playing Array and Pointer in A Great Messiness</span>
+
+    <span class="hljs-comment">// playing integer as an pointer or pointer</span>
+    a[i] == *(a + i); <span class="hljs-comment">// true</span>
+    i[a] == *(i + a); <span class="hljs-comment">// true</span>
+    *(a + i) == *(i + a); <span class="hljs-comment">// true</span>
+
+    <span class="hljs-comment">// don't code like this</span>
+    <span class="hljs-number">1</span>[p]; <span class="hljs-comment">// 11</span>
+    <span class="hljs-number">2</span>[p]; <span class="hljs-comment">// 11</span>
+    <span class="hljs-number">1</span>[p] = <span class="hljs-number">10</span>;
+    <span class="hljs-number">2</span>[p] = <span class="hljs-number">12</span>;
+    <span class="hljs-number">1</span>[a]; <span class="hljs-comment">// 10</span>
+    <span class="hljs-number">2</span>[a]; <span class="hljs-comment">// 12</span>
+    <span class="hljs-number">1</span>[a] = <span class="hljs-number">10</span>;
+    <span class="hljs-number">2</span>[a] = <span class="hljs-number">12</span>;
+
+    a[<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>[a]; <span class="hljs-comment">// true</span>
+    p[<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>[p]; <span class="hljs-comment">// true</span>
+
+    &amp;a[<span class="hljs-number">0</span>] == a; <span class="hljs-comment">// true</span>
+    &amp;*p == p; <span class="hljs-comment">// true</span>
+    &amp;*&amp;*p == p; <span class="hljs-comment">// true</span>
+
+
+    <span class="hljs-comment">// Step 5 - Pointer Points not only to array;</span>
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">3</span>;
+    p = &amp;x;
+    *p; <span class="hljs-comment">// 3</span>
+    *p = <span class="hljs-number">5</span>;
+    x; <span class="hljs-comment">// 5</span>
+
+
+    <span class="hljs-comment">// it is time to stop playing</span>
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>    </article>
+  </body>
+</html>

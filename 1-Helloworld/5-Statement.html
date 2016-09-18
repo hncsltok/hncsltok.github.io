@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Statement</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h2 id="statement"><a class="header-link" href="#statement"></a>Statement</h2>
+<p>The following table is about the classification, grammar and examples of statements.</p>
+<table>
+<tr>
+    <th>Statements</th>
+    <th>Grammar</th>
+    <th>Example</th>
+</tr>
+<tr>
+    <td><strong>Expression Statement</strong></td>
+    <td><code>&lt;expression&gt;;</code></td>
+    <td>
+        <code>1 + 2 * 3;</code>
+        <br/>
+        <code>put_string(&quot;input radius&quot;);</code>
+        <br/>
+        <code>radius = get_float();</code>
+    </td>
+</tr>
+<tr>
+    <td><strong>Structural Statement</strong></td>
+    <td>
+        <code>return &lt;expression&gt;;</code>
+        <br/>
+        <code>if (&lt;expression&gt;) { &lt;statements&gt; }</code>
+        <br/>
+        <code>while (&lt;expression&gt;) { &lt;statements&gt; }</code>
+        <br/>
+    </td>
+    <td>
+        <code>return 0;</code>
+    </td>
+</tr>
+<tr>
+    <td><strong>Declaration</strong></td>
+    <td>
+        <code>extern &lt;type&gt; &lt;expression&gt;;</code>
+        <!--<br/>
+        `<type> <expression>;`-->
+    </td>
+    <td></td>
+</tr>
+<tr>
+    <td><strong>Definition</strong></td>
+    <td><code>&lt;type&gt; &lt;expression&gt;;</code></td>
+    <td><code>float radius;</code></td>
+</tr>
+<tr>
+    <td><strong>Initialization</strong></td>
+    <td>
+        <code>&lt;type&gt; &lt;expression&gt; = &lt;expression&gt;;</code>
+        <br/>
+        <code>&lt;type&gt; &lt;expression&gt; = { &lt;expressions&gt; };</code>
+        <br/>
+        <code>&lt;type&gt; &lt;expression&gt; { &lt;statements&gt; }</code>
+    </td>
+    <td>
+        <code>float pi = 3.14</code>
+        <br/>
+        <code>int main() { ... }</code>
+    </td>
+</tr>
+</table>
+
+
+<h2 id="effect-of-statement"><a class="header-link" href="#effect-of-statement"></a>Effect of Statement</h2>
+<p>The following table is about effect of statement.</p>
+<table>
+<tr>
+    <th>Statement</th>
+    <th>Effect</th>
+</tr>
+<tr>
+    <td><strong>Expression Statement</strong></td>
+    <td>calculate expression, assign value to variable,
+     get data from user, or put data to user</td>
+</tr>
+<tr>
+    <td><strong>Structural Statement</strong></td>
+    <td>
+        change the order how statements are executed.
+    </td>
+</tr>
+<tr>
+    <td><strong>Declaration</strong></td>
+    <td>
+        tell the type of a variable
+    </td>
+</tr>
+<tr>
+    <td><strong>Definition</strong></td>
+    <td>tell the type of a variable, and allocate storage for it</td>
+</tr>
+<tr>
+    <td><strong>Initialization</strong></td>
+    <td>
+        tell the type of a variable, and set the value of it to a certain one
+    </td>
+</tr>
+</table>
+
+<p>The necessarity of these statements is explained at the end of Chapter-2.</p>
+    </article>
+  </body>
+</html>

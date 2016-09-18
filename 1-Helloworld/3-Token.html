@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Token</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h2 id="token"><a class="header-link" href="#token"></a>Token</h2>
+<p>Character, like alpha, digit and symbol, is used to composite tokens.</p>
+<p>Character, like space, is used to separate tokens and prevent ambiguity.</p>
+<pre class="hljs"><code><span class="hljs-comment">// try to indentify all the tokens in this source code</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// get a float value from command line</span>
+    put_string(<span class="hljs-string">"input radius: "</span>);
+    <span class="hljs-keyword">float</span> radius;
+    radius = get_float();
+
+    <span class="hljs-comment">// declare that the type of pi is float, and assign 3.14 to pi</span>
+    <span class="hljs-keyword">float</span> pi = <span class="hljs-number">3.14</span>;
+
+    <span class="hljs-comment">// put the caculated float value to command line</span>
+    put_string(<span class="hljs-string">"the area of given radius is: "</span>);
+    put_float(pi * radius * radius);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><p>The following table is about classification and examples of tokens.</p>
+<table>
+<tr>
+    <th>Classification of Tokens</th>
+    <th>Examples</th>
+</tr>
+<tr>
+    <td><strong>structural token</strong></td>
+    <td>( { ; return</td>
+</tr>
+<tr>
+    <td><strong>type</strong></td>
+    <td>void bool int double char string</td>
+</tr>
+<tr>
+    <td><strong>literal</strong></td>
+    <td>true 0 3.14 &#39;a&#39; &quot;input radius&quot;</td>
+</tr>
+<tr>
+    <td><strong>variable</strong></td>
+    <td>radius pi main put_string pause</td>
+</tr>
+<tr>
+    <td><strong>operator</strong></td>
+    <td>= *</td>
+</tr>
+</table>
+
+<p>The following table is about the original words of some abbreviated tokens.</p>
+<table>
+<tr>
+    <th>Abbreviation</th>
+    <th>Original Word</th>
+</tr>
+<tr>
+    <td>bool</td>
+    <td>boolean</td>
+</tr>
+<tr>
+    <td>char</td>
+    <td>character</td>
+</tr>
+<tr>
+    <td>int</td>
+    <td>integer</td>
+</tr>
+</table>
+
+
+<h2 id="type-system-in-c"><a class="header-link" href="#type-system-in-c"></a>Type System in C</h2>
+<p>Every literal and variable has its <strong>type</strong>.</p>
+<p><strong>char literal</strong> starts and ends with quotation mark <code>&#39;</code>.</p>
+<p><strong>string literal</strong> starts and ends with double quot <code>&quot;</code>.</p>
+<p><strong>int literal</strong> and <strong>float literal</strong> start with digit.</p>
+<p><code>true</code> and <code>false</code> are <strong>bool literal</strong>.</p>
+<h2 id="data-and-type"><a class="header-link" href="#data-and-type"></a>Data and Type</h2>
+<p>Whatever we define literal, variable, constant, function or even operator as, they are all <strong>data</strong>.
+All data has its type in C.</p>
+<p><strong>Data</strong> and <strong>type</strong> are different, while <strong>structural token</strong> serves for grammar.</p>
+<p>Data can either be constant or not.</p>
+<blockquote>
+<p>If a variable can be assigned to a value, the variable is <strong>modifiable</strong>, <strong>writable</strong>.
+Otherwise, it is <strong>unmodifiable</strong>, <strong>read-only</strong> or <strong>constant</strong>.</p>
+<p>Variables like <code>main</code>, <code>put_string</code> are constant, while variable like <code>pi</code> is modifiable.
+Hence, expression like <code>pi = 2.71828</code> is legal while <code>main = 3</code> are not.</p>
+<p>All literals are constant.</p>
+</blockquote>
+<h2 id="identifier-and-keyword"><a class="header-link" href="#identifier-and-keyword"></a>Identifier and Keyword</h2>
+<p><strong>Identifier</strong> is token that neither starts with digit,
+nor contains symbol except underscore <code>_</code>.</p>
+<p><strong>Keyword</strong> includes those identifiers of data that can are predefined in C language itself,
+not in <strong>standard library</strong>, <strong>third party library</strong> or <strong>ourselves</strong>.</p>
+<table>
+<tr>
+    <th>Keyword</th>
+    <th>Identifier but not Keyword</th>
+</tr>
+<tr>
+    <td><code>void</code> <code>true</code> <code>return</code> <code>if</code></td>
+    <td><code>pi</code> <code>radius</code> <code>put_string</code> <code>pause</code></td>
+</tr>
+</table>
+
+<p>A list of keywords is predefined in C and can not be identifiers.</p>
+<h2 id="an-example"><a class="header-link" href="#an-example"></a>An Example</h2>
+<p>The following quotation block analysed the C source code above.</p>
+<blockquote>
+<p>Every variable defined has a type and a value.</p>
+<p>Executing the <code>float radius;</code> <strong>variable definition statement</strong> 
+defines a variable with name pi, type float and value undefined.</p>
+<p>Executing the <code>radius = get_float();</code> <strong>assignment expression statement</strong>,
+replaces the <code>get_float()</code> expression with the value inputted,
+and sets the value of radius to it.</p>
+<p>The <code>float pi = 3.14;</code> statement is a <strong>variable initialization statement</strong>.
+This statement can be viewed as a combination of 
+the <code>float pi;</code> definition statement and <code>pi = 3.14;</code> assignment expression statement.</p>
+<p>With the given context above,
+in the <code>pi * radius * radius</code> expression, 
+pi is replaced with <code>3.14</code> and radius is replace with the value inputted.</p>
+<p>The value of the expression is finally put on screen.</p>
+</blockquote>
+<h2 id="code-style"><a class="header-link" href="#code-style"></a>Code Style</h2>
+<p>Placing multiple statements in one line like sample code below
+is acceptable but not recommended.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{ put_string(<span class="hljs-string">"Hello"</span>); pause(); <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; }</code></pre>    </article>
+  </body>
+</html>

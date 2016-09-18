@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Type</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h2 id="type"><a class="header-link" href="#type"></a>Type</h2>
+<p>Every literal, variable, and expression has a type.</p>
+<p>Simple types can be identified with one token, 
+like <code>bool</code>, <code>int</code>, <code>float</code>, <code>char</code> and <code>string</code>,
+as listed in the table above.</p>
+<p>Compound types are series of types,
+such as <strong>pointer</strong>, <strong>array</strong>, <strong>structure</strong> and <strong>function</strong>.</p>
+<blockquote>
+<p>Compound types take an type or types to form an final type.
+Any variable must be a specific final type.</p>
+<p>For example, any <strong>pointer</strong> type needs an type to specify
+what <strong>type of data it points to</strong>. Any <strong>array</strong> type needs an type
+to specify what <strong>type of data it contains</strong>.</p>
+<p>The <strong>pointer to int</strong> type is not the same as the <strong>the pointer to float</strong> type,
+although they are both <strong>pointer</strong> type. Similarly, the <strong>array of int</strong> type
+is not the same as the <strong>array of float</strong> type.</p>
+<p>The <strong>function</strong> types are even more complex.
+A function type takes types as its <strong>return type</strong> and <strong>arguments types</strong>
+to specify its final type.</p>
+<blockquote>
+<p><code>put_string</code> is the <strong>function that returns nothing, takes a string as argument</strong> type.</p>
+<p><code>pause</code> is the <strong>function that returns nothing, takes no argument</strong> type </p>
+<p><code>add</code> is the <strong>function that returns an int, takes two ints</strong> type.</p>
+</blockquote>
+</blockquote>
+<h2 id="statement-with-type"><a class="header-link" href="#statement-with-type"></a>Statement with Type</h2>
+<p>This subsection explains why the grammar of definition statement
+is something like <code>&lt;type&gt; &lt;expression&gt;;</code>.</p>
+<p><code>&lt;type&gt; &lt;expression&gt;;</code> definition statement tells the simple type of the expression.
+By reasoning, we can get the type of the variable inside the expression.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">float</span> pi;
+    <span class="hljs-keyword">int</span> a[<span class="hljs-number">10</span>];
+    <span class="hljs-keyword">int</span> *p;
+}</code></pre><blockquote>
+<p><code>float pi;</code> defines <code>pi</code> as a float.</p>
+<p><code>int a[10];</code> tells <code>a[...]</code> is a int, so we can know <code>a</code> is
+an <strong>array of int</strong>.</p>
+<p><code>int *p;</code> tells the content of p is a int, so we can know <code>p</code> is
+a <strong>pointer to int</strong>.</p>
+<p><code>int main() { ... };</code> is an initialization statement. It tells
+<code>main()</code> is an expression of int, and defines
+<strong>function that returns a int, and takes no argument</strong>.</p>
+</blockquote>
+<h2 id="function-type"><a class="header-link" href="#function-type"></a>Function Type</h2>
+<p>Two <code>function type</code> are equal, only when the return type,
+number of arguments and type of each arguments are all equal.
+They are otherwise not equal.</p>
+<blockquote>
+<p><code>add</code> is an function variable defined in <code>litan.h</code> file.
+It takes two int arguments and returns a int value.</p>
+<p><code>add(1, 1); // 2</code></p>
+<p>An error will be raised if function variable and its arguments don&#39;t match.</p>
+<p><code>add(1, 1.0); // error: the type of 1.0 is float, not int</code></p>
+<p><img src="../../graph/tree.svg" class="limited"/> Tree form of type</p>
+</blockquote>
+<h2 id="type-definition-statement"><a class="header-link" href="#type-definition-statement"></a>Type Definition Statement</h2>
+<p><strong>type definition statement</strong> is something like <code>typedef &lt;type&gt; expression;</code></p>
+<p>A type definition statement tells the simple type of an expression.
+By reasoning, we can get the type of the variable inside the expression.
+And </p>
+<pre class="hljs"><code><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">bool</span>;
+<span class="hljs-keyword">int</span> <span class="hljs-literal">false</span> = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">int</span> <span class="hljs-literal">true</span> = <span class="hljs-number">1</span>;
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">char</span> *<span class="hljs-built_in">string</span>;
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span> *pointer;
+pointer null = <span class="hljs-number">0</span>;</code></pre><blockquote>
+<p>If we say <code>int bool;</code>, it tells that <code>bool</code> is an variable
+whose type is <strong>bool</strong>. </p>
+<p>By adding <code>typedef</code>, <code>typedef int bool;</code> tells that
+<code>bool</code> is not an <strong>int</strong>, but the <strong>int</strong> itself.</p>
+<p>If we say <code>char *string;</code>, it tells that <code>*string</code> is an char and <code>string</code>
+is an variable whose type is <strong>pointer to char</strong>. </p>
+<p>By adding <code>typedef</code>, <code>typedef char *string;</code> tells that
+<code>string</code> is not an <strong>pointer to char</strong>, but the <strong>pointer to char</strong> itself.</p>
+</blockquote>
+    </article>
+  </body>
+</html>

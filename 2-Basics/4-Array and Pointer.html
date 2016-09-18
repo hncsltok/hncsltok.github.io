@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Array</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><h2 id="array"><a class="header-link" href="#array"></a>Array</h2>
+<p><code>&lt;type&gt; &lt;name&gt;[&lt;length&gt;];</code> is an array definition statement.</p>
+<blockquote>
+<p>By <code>int a[100];</code> array definition statement,
+an array variable is defined, named <code>a</code>. 
+It contains <code>100</code> numbers <code>int</code>.</p>
+</blockquote>
+<p><code>&lt;length&gt;</code> must be an integer, and it must be <strong>constant</strong> or <strong>constant expression</strong>.
+This is because the size of memory it has must be fixed.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> width = <span class="hljs-number">3</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> height = <span class="hljs-number">4</span>;
+    <span class="hljs-keyword">int</span> a[width * height]; <span class="hljs-comment">// legal, width and height are both constant</span>
+
+    <span class="hljs-keyword">int</span> x = get_int();
+    <span class="hljs-keyword">int</span> b[x]; <span class="hljs-comment">// error, x is not constant before running.</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> length = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">int</span> a[length];
+
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= length; ++i) {
+        a[i] = i;        
+    }
+
+    <span class="hljs-keyword">int</span> sum;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= length; ++i) {
+        sum += a[i];
+    }
+
+    put_string(<span class="hljs-string">"the sum from 1 to 100 is :"</span>);
+    put_int(sum);
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><h2 id="array-initialization-statement"><a class="header-link" href="#array-initialization-statement"></a>Array Initialization Statement</h2>
+<p><code>&lt;type&gt; &lt;name&gt;[&lt;length&gt;] = { &lt;expression&gt;, &lt;expression&gt;, ...};</code></p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// defining an array and initialize it separately</span>
+    <span class="hljs-keyword">int</span> birthday_geogorian[<span class="hljs-number">3</span>];
+    birthday_geogorian[<span class="hljs-number">0</span>] = <span class="hljs-number">1997</span>;
+    birthday_geogorian[<span class="hljs-number">1</span>] = <span class="hljs-number">11</span>;
+    birthday_geogorian[<span class="hljs-number">2</span>] = <span class="hljs-number">11</span>;
+
+    <span class="hljs-comment">// defining an array and initialize with `{}`</span>
+    <span class="hljs-keyword">int</span> birthday_lunar[<span class="hljs-number">3</span>]  = {<span class="hljs-number">1997</span>, <span class="hljs-number">10</span>, <span class="hljs-number">12</span>};
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><h2 id="pointer"><a class="header-link" href="#pointer"></a>Pointer</h2>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> length = <span class="hljs-number">100</span>;
+    <span class="hljs-keyword">int</span> a[length];
+
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= length; ++i) {
+        a[i] = i;        
+    }
+
+    <span class="hljs-keyword">int</span> *p;
+    p = a;
+
+    put_string(<span class="hljs-string">"The first element in `a` is"</span>);
+    put_int(*p);
+
+    ++p;
+    put_string(<span class="hljs-string">"The next element in `a` is"</span>)
+    put_int(*p);
+
+    p = a + <span class="hljs-number">10</span>;
+    put_string(<span class="hljs-string">"The 10th element after a[0] is"</span>);
+    put_int(*p);
+
+    put_string(<span class="hljs-string">"The 10th element after current *p is"</span>);
+    put_int(*(p + <span class="hljs-number">10</span>));
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> length = <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">int</span> a[length];
+    <span class="hljs-keyword">int</span> *p;
+
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= length; ++i) {
+        *(p + i) = i;        
+    }
+
+    <span class="hljs-keyword">int</span> product;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; i &lt;= length; ++i) {
+        sum *= *(p + i);
+    }
+
+    put_string(<span class="hljs-string">"the product from 1 to 10 is :"</span>);
+    put_int(product);
+
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>    </article>
+  </body>
+</html>

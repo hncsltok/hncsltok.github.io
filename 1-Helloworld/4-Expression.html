@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Expression</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h2 id="expression"><a class="header-link" href="#expression"></a>Expression</h2>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    put_string(<span class="hljs-string">"The result of 1 + 1 is"</span>);
+    put_int(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>);
+    warp();
+
+    put_string(<span class="hljs-string">"Everyone thinks the answer is"</span>);
+    put_bool(<span class="hljs-literal">true</span>);
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><p>The following table is about classification and examples of expressions.</p>
+<table>
+<tr>
+    <th>Classification of Expressions</th>
+    <th>Examples</th>
+</tr>
+<tr>
+    <td>Literal or Variable</td>
+    <td><code>1</code> <code>3.14</code> <code>true</code> <code>&quot;Hello&quot;</code></td>
+</tr>
+<tr>
+    <td>Function Call</td>
+    <td><code>put_string(&quot;input radius&quot;)</code> <code>get_float()</code></td>
+</tr>
+<tr>
+    <td>Operator Call</td>
+    <td><code>1 + 1</code> <code>pi * radius * radius</code></td>
+</tr>
+</table>
+
+<p>A single <strong>literal</strong> or <strong>variable</strong> is an expression.</p>
+<p>A <strong>function call</strong> is a <strong>function variable</strong> plus a pair of parentheses
+with <strong>arguments</strong> inside.
+<strong>Arguments</strong> are a list of expressions separated by comma <code>,</code>.
+Number of arguments can be zero, one or more.</p>
+<p><strong>Operator</strong> with <strong>operant</strong> is an expression.
+<strong>Operator</strong> is like <strong>function variable</strong> and <strong>operant</strong> is like argument.</p>
+<p>Both <strong>operant</strong> and <strong>argument</strong> are another way of saying <strong>expression</strong>.</p>
+<blockquote>
+<p>You may wonder why there needs be function variable like
+<code>put_string</code>, <code>put_int</code> or <code>put_bool</code> to put different type of data
+on to screen, instead of using one function varible like <code>put</code>
+that can take different types of data.</p>
+<p>The reason is that for any function variable, 
+the number and type of its argument is fixed by its type.</p>
+<p><code>put_string</code> can only take one argument with type <code>string</code>,
+and <code>put_int</code> can only take one argument with type <code>int</code>.
+<code>pause</code> can not take argument. </p>
+<p>An error will be raised if function variable and its arguments don&#39;t match</p>
+<blockquote>
+<p><code>put_string(123); //error, type of argument must be string</code></p>
+<p><code>put_int(1, 2); // error, number of argument must be one</code></p>
+</blockquote>
+<p>Type system in C will be further explained in Chapter-2-Basics, Section-1-Type.</p>
+</blockquote>
+<h2 id="tree-form-of-expression"><a class="header-link" href="#tree-form-of-expression"></a>Tree Form of Expression</h2>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-number">1</span> + <span class="hljs-number">2</span> * <span class="hljs-number">3</span>; 
+    <span class="hljs-comment">// 1 + (2 * 3)  </span>
+    <span class="hljs-comment">// 1 + 6  </span>
+    <span class="hljs-comment">// 7</span>
+
+    (<span class="hljs-number">1</span> + <span class="hljs-number">2</span>) * <span class="hljs-number">3</span>;
+    <span class="hljs-comment">// (1 + 2) * 3</span>
+    <span class="hljs-comment">// 3 * 3</span>
+    <span class="hljs-comment">// 9</span>
+
+    <span class="hljs-number">2</span> + <span class="hljs-number">3</span> &gt; <span class="hljs-number">4</span>;
+    <span class="hljs-comment">// (2 + 3) &gt; 4</span>
+    <span class="hljs-comment">// 5 &gt; 4</span>
+    <span class="hljs-comment">// true</span>
+
+    <span class="hljs-number">1</span> + <span class="hljs-number">1</span> == <span class="hljs-number">2</span>;
+    <span class="hljs-comment">// (1 + 1) == 2</span>
+    <span class="hljs-comment">// 2 == 2 </span>
+    <span class="hljs-comment">// true</span>
+
+    !<span class="hljs-literal">true</span> || <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">// (!true) || false</span>
+    <span class="hljs-comment">// false || false</span>
+    <span class="hljs-comment">// false</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><p>It is noticeable that <strong>function_call expression</strong> 
+and <strong>operator_call expression</strong> can <strong>nest</strong> other expression. </p>
+<p>B nesting, or the recursive definition of expression,
+an expression can be viewed in a tree form.</p>
+<blockquote>
+<p>In <code>put_int(1 + 1)</code> expression,
+<code>1 + 1</code> is an operator_call expression.</p>
+<p><code>put_int</code> take the <code>1 + 1</code> expression above as argument,
+and forms the <code>put_int(1 + 1)</code> expression.</p>
+<p>The following graph is about the <strong>tree form graph</strong> of
+the <code>put_int(1 + 1)</code> expression.</p>
+<p class="img-container"><img src="../../graph/tree.svg" class="limited"/></p>
+</blockquote>
+<p>The <strong>priority</strong> and <strong>associativity</strong> of operator 
+is important in forming an expression tree.</p>
+<p>It is suggested that we use parentheses in most ocassions to prevent ambiguity.</p>
+    </article>
+  </body>
+</html>

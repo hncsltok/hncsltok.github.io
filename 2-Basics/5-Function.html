@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Function</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><!--
+## Function
+
+The **content of function** is a kind of data in C programming language,
+but there is no type or variable for it. There are only the type
+**the pointer to the content of function**. That is to say,
+all **function type** are a kind of **pointer type**, and
+**function type** is short for **function pointer type**.
+
+> Just like **content of function**, there are many
+> kinds of data in C without a type or variable for it.
+> Generally, there are no type or variable for all data the size of which are not fixed.
+>
+> `string` type is actually a `pointer to char` type
+>
+> all array are pointer.
+-->
+<h2 id="function"><a class="header-link" href="#function"></a>Function</h2>
+<p>Any function variable, like <code>f</code>, is an <strong>function pointer</strong>.
+By using get-content operator <code>*</code>, <code>*f</code> is the <strong>content of function pointer</strong>.</p>
+<p>A function call expression can be something like <code>f(x)</code> or <code>(*f)(x)</code>.</p>
+<p>Function is called with the <strong>content of function pointer</strong> like <code>(*f)(x)</code>.
+<code>f(x)</code> is a grammar sugar for <code>(*f)(x)</code>.</p>
+<h2 id="function-initialization-statement"><a class="header-link" href="#function-initialization-statement"></a>Function Initialization Statement</h2>
+<p><code>&lt;type&gt; &lt;expression&gt; = &lt;expression&gt;;</code> is the grammar for simple type initialization statement.</p>
+<p><code>&lt;type&gt; &lt;expression&gt; = { &lt;expressions&gt; };</code> is the grammar for array initialization statement.</p>
+<p>Function initialization statement may be something like <code>&lt;type&gt; &lt;expression&gt; = { &lt;statements&gt; };</code>.
+But this is not supported and the following grammar should be used.</p>
+<p><code>&lt;type&gt; &lt;expression&gt; { &lt;statements&gt; }</code></p>
+<p>Notice that <code>=</code> operator and <code>;</code> token is omitted.</p>
+<p>To initialize an function with another function, still using
+<code>&lt;type&gt; &lt;expression&gt; = &lt;expression&gt;;</code>.</p>
+<h2 id="implementing-pow-and-sum-"><a class="header-link" href="#implementing-pow-and-sum-"></a>Implementing <code>pow</code> and <code>sum</code></h2>
+<p>a<sup>b</sup> <code>pow(a, b)</code></p>
+<h2 id="function-declaration"><a class="header-link" href="#function-declaration"></a>Function Declaration</h2>
+    </article>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Hello World</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h1 id="hello-world"><a class="header-link" href="#hello-world"></a>Hello World</h1>
+<p>In our first chapter <strong>Hello World</strong>, grammatical concepts in C, like
+<strong>statements</strong>, <strong>expressions</strong> and <strong>tokens</strong>, will be introduced.</p>
+<blockquote>
+<p>The following table is about analogy between C grammar and English grammar.</p>
+</blockquote>
+<table>
+<tr>
+    <th>C</th>
+    <th>English</th>
+<tr>
+<tr>
+    <td>statement</td>
+    <td>sentence</td>
+<tr>
+<tr>
+    <td>expression</td>
+    <td>phrase</td>
+<tr>
+<tr>
+    <td>token</td>
+    <td>word</td>
+<tr>
+</table>
+
+<blockquote>
+<p>Much of the text in <strong>quotation block</strong> like this one in this C tutorial is about giving examples.
+You needn&#39;t know how the analysis is made the first time you read this tutorial.
+Systematic explanation will always be introduced in following sections.</p>
+<p>In the sample code below, <code>put_string</code> is a <strong>function variable token</strong>,
+and <code>&quot;Hello&quot;</code> is a <strong>string literal token</strong>.</p>
+<p>Something like <code>f(x)</code> or <code>x+y</code> is an <strong>expression</strong>.
+In this case, <code>put_string</code> is <code>f</code> and <code>&quot;Hello&quot;</code> is <code>x</code>.
+Hence, <code>put_string(&quot;Hello&quot;)</code> is an expression.</p>
+<p>An expression plus a semicolon <code>;</code> is an <strong>expression statement</strong>.
+The <code>put_string(&quot;Hello&quot;);</code> <strong>statement</strong> is executed,
+and <code>Hello</code> is then put on screen.</p>
+</blockquote>
+<pre class="hljs"><code><span class="hljs-comment">// this program puts string `Hello` to the screen</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// this statement is executed</span>
+    put_string(<span class="hljs-string">"Hello"</span>);
+
+    <span class="hljs-comment">// this statement is executed after</span>
+    pause();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><h2 id="grammar-of-tree-form"><a class="header-link" href="#grammar-of-tree-form"></a>Grammar of Tree Form</h2>
+<p>C source code is organized with <strong>statements</strong>, <strong>expressions</strong>, <strong>tokens</strong> 
+and finally <strong>characters</strong> in a tree form.</p>
+<blockquote>
+<p>The tree form of the source code above.</p>
+<p class="img-container"><img src="../../graph/1-1.svg"/></p>
+</blockquote>
+<p><strong>Comment line</strong> or <strong>preprocess line</strong> is not a part of
+the C programming language.</p>
+<p>C program executes statement one after another.</p>
+<pre class="hljs"><code><span class="hljs-comment">// comment line start with `//` and will not be executed</span>
+<span class="hljs-comment">// comment are used to help human to read source code</span>
+<span class="hljs-comment">// comment does not influence how a program runs</span>
+
+<span class="hljs-comment">// preprocess line is something like `#include &lt;file_name&gt;`</span>
+<span class="hljs-comment">// these means including(copying) everything from file `litan.h` to this line</span>
+<span class="hljs-comment">// `litan.h` is a file that contains C source code written by Litan.</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-comment">// leave this line untouched before chapter-2</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// your statements can be written here</span>
+
+    <span class="hljs-comment">// leave `return 0;` and `}` untouched before chapter-2</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre>    </article>
+  </body>
+</html>

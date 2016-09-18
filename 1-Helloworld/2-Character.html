@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>Character</title>
+    <link type="text/css" rel="stylesheet" href="..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><link rel="stylesheet" href="../assets/main.css"/>
+
+<h2 id="character"><a class="header-link" href="#character"></a>Character</h2>
+<p>Source code is no more than characters put together.</p>
+<p>The following table is about classification and examples of characters.</p>
+<table>
+<tr>
+    <td><strong>alpha</strong></td>
+    <td>a b y z A</td>
+<tr>
+<tr>
+    <td><strong>digit</strong></td>
+    <td>0 1 2 3 9</td>
+<tr>
+<tr>
+    <td><strong>symbol</strong></td>
+    <td># ( { ; / </td>
+<tr>
+<tr>
+    <td><strong>space</strong></td>
+    <td></td>
+<tr>
+</table>
+
+<blockquote>
+<p><strong> A list of characters </strong></p>
+<p><code>a b c d e f g h i j k l m n o p q r s t u v w x y z</code></p>
+<p><code>A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</code></p>
+<p><code>0 1 2 3 4 5 6 7 8 9</code></p>
+<p><code>` ~ ! @ # $ % ^ &amp; * ( ) - _ = + , . ; : / ? \ | &quot; &#39; [ ] { } &lt; &gt;</code></p>
+</blockquote>
+<h2 id="escaped-character"><a class="header-link" href="#escaped-character"></a>Escaped Character</h2>
+<p>Inside a <strong>string</strong>, some character <code>&quot;</code> can cause ambiguity.
+To solve this problem, escape character <code>\</code> is used.</p>
+<pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// this statement is correct, as `"` in string is escaped using `\`</span>
+    put_string(<span class="hljs-string">"I want put \" inside a string !"</span>);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}</code></pre><pre class="hljs"><code><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;litan.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-comment">// this statement has ambiguity and will cause an error</span>
+    put_string(<span class="hljs-string">"I want put "</span> inside a <span class="hljs-built_in">string</span> !<span class="hljs-string">");
+
+    return 0;
+}</span></code></pre><p>The following table is about how to escape an character in string.</p>
+<table>
+<tr>
+    <th>Original Character</th>
+    <th>Escaped Character</th>
+<tr>
+<tr>
+    <td>&quot;</td>
+    <td>\&quot;</td>
+<tr>
+<tr>
+    <td>&#39;</td>
+    <td>\&#39;</td>
+<tr>
+<tr>
+    <td>\</td>
+    <td>\\</td>
+<tr>
+<tr>
+    <td>&lt;enter&gt;</td>
+    <td>\n</td>
+<tr>
+<tr>
+    <td>&lt;tab&gt;</td>
+    <td>\t</td>
+<tr>
+<tr>
+    <td>&lt;terminal character&gt;</td>
+    <td>\0</td>
+<tr>
+</table>
+
+<p>Like <strong>&lt;enter&gt;</strong> above, a term enclosed by <code>&lt;</code> and <code>&gt;</code> braces is used in this tutorial
+to refer some grammatical concept, or something unprintable.</p>
+<blockquote>
+<p>If we say something like <code>&lt;expression&gt;;</code> is an expression statement,
+<code>&lt;expression&gt;;</code> itself is not an expression statement.
+But something such as <code>put_string(&quot;Hello&quot;);</code> is an expression statement,
+as <code>put_string(&quot;Hello&quot;)</code> is an <code>&lt;expression&gt;</code>.</p>
+</blockquote>
+    </article>
+  </body>
+</html>

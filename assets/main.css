@@ -1,0 +1,15 @@
+table {
+    font-family: consolas, monospace;
+}
+
+div.center {
+    margin: 0 auto;
+}
+
+div.center p {
+    text-align: center;
+}
+
+img.limited {
+    max-height: 3em;
+}
