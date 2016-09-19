@@ -1,0 +1,849 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><pre class="hljs"><code><span class="hljs-comment">/**
+ * impress.js
+ *
+ * impress.js is a presentation tool based on the power of CSS3 transforms and transitions
+ * in modern browsers and inspired by the idea behind prezi.com.
+ *
+ *
+ * Copyright 2011-2012 Bartek Szopka (@bartaz)
+ *
+ * Released under the MIT and GPL Licenses.
+ *
+ * ------------------------------------------------
+ *  author:  Bartek Szopka
+ *  version: 0.5.3
+ *  url:     http://bartaz.github.com/impress.js/
+ *  source:  http://github.com/bartaz/impress.js/
+ */</span>
+
+<span class="hljs-comment">/*jshint bitwise:true, curly:true, eqeqeq:true, forin:true, latedef:true, newcap:true,
+         noarg:true, noempty:true, undef:true, strict:true, browser:true */</span>
+
+<span class="hljs-comment">// You are one of those who like to know how things work inside?</span>
+<span class="hljs-comment">// Let me show you the cogs that make impress.js run...</span>
+( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> document, window </span>) </span>{
+<span class="hljs-meta">    "use strict"</span>;
+
+    <span class="hljs-comment">// HELPER FUNCTIONS</span>
+
+    <span class="hljs-comment">// `pfx` is a function that takes a standard CSS property name as a parameter</span>
+    <span class="hljs-comment">// and returns it's prefixed version valid for current browser it runs in.</span>
+    <span class="hljs-comment">// The code is heavily inspired by Modernizr http://www.modernizr.com/</span>
+    <span class="hljs-keyword">var</span> pfx = ( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+        <span class="hljs-keyword">var</span> style = <span class="hljs-built_in">document</span>.createElement( <span class="hljs-string">"dummy"</span> ).style,
+            prefixes = <span class="hljs-string">"Webkit Moz O ms Khtml"</span>.split( <span class="hljs-string">" "</span> ),
+            memory = {};
+
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> prop </span>) </span>{
+            <span class="hljs-keyword">if</span> ( <span class="hljs-keyword">typeof</span> memory[ prop ] === <span class="hljs-string">"undefined"</span> ) {
+
+                <span class="hljs-keyword">var</span> ucProp  = prop.charAt( <span class="hljs-number">0</span> ).toUpperCase() + prop.substr( <span class="hljs-number">1</span> ),
+                    props   = ( prop + <span class="hljs-string">" "</span> + prefixes.join( ucProp + <span class="hljs-string">" "</span> ) + ucProp ).split( <span class="hljs-string">" "</span> );
+
+                memory[ prop ] = <span class="hljs-literal">null</span>;
+                <span class="hljs-keyword">for</span> ( <span class="hljs-keyword">var</span> i <span class="hljs-keyword">in</span> props ) {
+                    <span class="hljs-keyword">if</span> ( style[ props[ i ] ] !== <span class="hljs-literal">undefined</span> ) {
+                        memory[ prop ] = props[ i ];
+                        <span class="hljs-keyword">break</span>;
+                    }
+                }
+
+            }
+
+            <span class="hljs-keyword">return</span> memory[ prop ];
+        };
+
+    } )();
+
+    <span class="hljs-comment">// `arraify` takes an array-like object and turns it into real Array</span>
+    <span class="hljs-comment">// to make all the Array.prototype goodness available.</span>
+    <span class="hljs-keyword">var</span> arrayify = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> a </span>) </span>{
+        <span class="hljs-keyword">return</span> [].slice.call( a );
+    };
+
+    <span class="hljs-comment">// `css` function applies the styles given in `props` object to the element</span>
+    <span class="hljs-comment">// given as `el`. It runs all property names through `pfx` function to make</span>
+    <span class="hljs-comment">// sure proper prefixed version of the property is used.</span>
+    <span class="hljs-keyword">var</span> css = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> el, props </span>) </span>{
+        <span class="hljs-keyword">var</span> key, pkey;
+        <span class="hljs-keyword">for</span> ( key <span class="hljs-keyword">in</span> props ) {
+            <span class="hljs-keyword">if</span> ( props.hasOwnProperty( key ) ) {
+                pkey = pfx( key );
+                <span class="hljs-keyword">if</span> ( pkey !== <span class="hljs-literal">null</span> ) {
+                    el.style[ pkey ] = props[ key ];
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> el;
+    };
+
+    <span class="hljs-comment">// `toNumber` takes a value given as `numeric` parameter and tries to turn</span>
+    <span class="hljs-comment">// it into a number. If it is not possible it returns 0 (or other value</span>
+    <span class="hljs-comment">// given as `fallback`).</span>
+    <span class="hljs-keyword">var</span> toNumber = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> numeric, fallback </span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">isNaN</span>( numeric ) ? ( fallback || <span class="hljs-number">0</span> ) : <span class="hljs-built_in">Number</span>( numeric );
+    };
+
+    <span class="hljs-comment">// `byId` returns element with given `id` - you probably have guessed that ;)</span>
+    <span class="hljs-keyword">var</span> byId = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> id </span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">document</span>.getElementById( id );
+    };
+
+    <span class="hljs-comment">// `$` returns first element for given CSS `selector` in the `context` of</span>
+    <span class="hljs-comment">// the given element or whole document.</span>
+    <span class="hljs-keyword">var</span> $ = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> selector, context </span>) </span>{
+        context = context || <span class="hljs-built_in">document</span>;
+        <span class="hljs-keyword">return</span> context.querySelector( selector );
+    };
+
+    <span class="hljs-comment">// `$$` return an array of elements for given CSS `selector` in the `context` of</span>
+    <span class="hljs-comment">// the given element or whole document.</span>
+    <span class="hljs-keyword">var</span> $$ = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> selector, context </span>) </span>{
+        context = context || <span class="hljs-built_in">document</span>;
+        <span class="hljs-keyword">return</span> arrayify( context.querySelectorAll( selector ) );
+    };
+
+    <span class="hljs-comment">// `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data</span>
+    <span class="hljs-comment">// and triggers it on element given as `el`.</span>
+    <span class="hljs-keyword">var</span> triggerEvent = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> el, eventName, detail </span>) </span>{
+        <span class="hljs-keyword">var</span> event = <span class="hljs-built_in">document</span>.createEvent( <span class="hljs-string">"CustomEvent"</span> );
+        event.initCustomEvent( eventName, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>, detail );
+        el.dispatchEvent( event );
+    };
+
+    <span class="hljs-comment">// `translate` builds a translate transform string for given data.</span>
+    <span class="hljs-keyword">var</span> translate = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> t </span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">" translate3d("</span> + t.x + <span class="hljs-string">"px,"</span> + t.y + <span class="hljs-string">"px,"</span> + t.z + <span class="hljs-string">"px) "</span>;
+    };
+
+    <span class="hljs-comment">// `rotate` builds a rotate transform string for given data.</span>
+    <span class="hljs-comment">// By default the rotations are in X Y Z order that can be reverted by passing `true`</span>
+    <span class="hljs-comment">// as second parameter.</span>
+    <span class="hljs-keyword">var</span> rotate = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> r, revert </span>) </span>{
+        <span class="hljs-keyword">var</span> rX = <span class="hljs-string">" rotateX("</span> + r.x + <span class="hljs-string">"deg) "</span>,
+            rY = <span class="hljs-string">" rotateY("</span> + r.y + <span class="hljs-string">"deg) "</span>,
+            rZ = <span class="hljs-string">" rotateZ("</span> + r.z + <span class="hljs-string">"deg) "</span>;
+
+        <span class="hljs-keyword">return</span> revert ? rZ + rY + rX : rX + rY + rZ;
+    };
+
+    <span class="hljs-comment">// `scale` builds a scale transform string for given data.</span>
+    <span class="hljs-keyword">var</span> scale = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> s </span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">" scale("</span> + s + <span class="hljs-string">") "</span>;
+    };
+
+    <span class="hljs-comment">// `perspective` builds a perspective transform string for given data.</span>
+    <span class="hljs-keyword">var</span> perspective = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> p </span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">" perspective("</span> + p + <span class="hljs-string">"px) "</span>;
+    };
+
+    <span class="hljs-comment">// `getElementFromHash` returns an element located by id from hash part of</span>
+    <span class="hljs-comment">// window location.</span>
+    <span class="hljs-keyword">var</span> getElementFromHash = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+        <span class="hljs-comment">// Get id from url # by removing `#` or `#/` from the beginning,</span>
+        <span class="hljs-comment">// so both "fallback" `#slide-id` and "enhanced" `#/slide-id` will work</span>
+        <span class="hljs-keyword">return</span> byId( <span class="hljs-built_in">window</span>.location.hash.replace( <span class="hljs-regexp">/^#\/?/</span>, <span class="hljs-string">""</span> ) );
+    };
+
+    <span class="hljs-comment">// `computeWindowScale` counts the scale factor between window size and size</span>
+    <span class="hljs-comment">// defined for the presentation in the config.</span>
+    <span class="hljs-keyword">var</span> computeWindowScale = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> config </span>) </span>{
+        <span class="hljs-keyword">var</span> hScale = <span class="hljs-built_in">window</span>.innerHeight / config.height,
+            wScale = <span class="hljs-built_in">window</span>.innerWidth / config.width,
+            scale = hScale &gt; wScale ? wScale : hScale;
+
+        <span class="hljs-keyword">if</span> ( config.maxScale &amp;&amp; scale &gt; config.maxScale ) {
+            scale = config.maxScale;
+        }
+
+        <span class="hljs-keyword">if</span> ( config.minScale &amp;&amp; scale &lt; config.minScale ) {
+            scale = config.minScale;
+        }
+
+        <span class="hljs-keyword">return</span> scale;
+    };
+
+    <span class="hljs-comment">// CHECK SUPPORT</span>
+    <span class="hljs-keyword">var</span> body = <span class="hljs-built_in">document</span>.body;
+
+    <span class="hljs-keyword">var</span> ua = navigator.userAgent.toLowerCase();
+    <span class="hljs-keyword">var</span> impressSupported =
+
+                          <span class="hljs-comment">// Browser should support CSS 3D transtorms</span>
+                           ( pfx( <span class="hljs-string">"perspective"</span> ) !== <span class="hljs-literal">null</span> ) &amp;&amp;
+
+                          <span class="hljs-comment">// Browser should support `classList` and `dataset` APIs</span>
+                           ( body.classList ) &amp;&amp;
+                           ( body.dataset ) &amp;&amp;
+
+                          <span class="hljs-comment">// But some mobile devices need to be blacklisted,</span>
+                          <span class="hljs-comment">// because their CSS 3D support or hardware is not</span>
+                          <span class="hljs-comment">// good enough to run impress.js properly, sorry...</span>
+                           ( ua.search( <span class="hljs-regexp">/(iphone)|(ipod)|(android)/</span> ) === <span class="hljs-number">-1</span> );
+
+    <span class="hljs-keyword">if</span> ( !impressSupported ) {
+
+        <span class="hljs-comment">// We can't be sure that `classList` is supported</span>
+        body.className += <span class="hljs-string">" impress-not-supported "</span>;
+    } <span class="hljs-keyword">else</span> {
+        body.classList.remove( <span class="hljs-string">"impress-not-supported"</span> );
+        body.classList.add( <span class="hljs-string">"impress-supported"</span> );
+    }
+
+    <span class="hljs-comment">// GLOBALS AND DEFAULTS</span>
+
+    <span class="hljs-comment">// This is where the root elements of all impress.js instances will be kept.</span>
+    <span class="hljs-comment">// Yes, this means you can have more than one instance on a page, but I'm not</span>
+    <span class="hljs-comment">// sure if it makes any sense in practice ;)</span>
+    <span class="hljs-keyword">var</span> roots = {};
+
+    <span class="hljs-comment">// Some default config values.</span>
+    <span class="hljs-keyword">var</span> defaults = {
+        width: <span class="hljs-number">1024</span>,
+        height: <span class="hljs-number">768</span>,
+        maxScale: <span class="hljs-number">1</span>,
+        minScale: <span class="hljs-number">0</span>,
+
+        perspective: <span class="hljs-number">1000</span>,
+
+        transitionDuration: <span class="hljs-number">1000</span>
+    };
+
+    <span class="hljs-comment">// It's just an empty function ... and a useless comment.</span>
+    <span class="hljs-keyword">var</span> empty = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; };
+
+    <span class="hljs-comment">// IMPRESS.JS API</span>
+
+    <span class="hljs-comment">// And that's where interesting things will start to happen.</span>
+    <span class="hljs-comment">// It's the core `impress` function that returns the impress.js API</span>
+    <span class="hljs-comment">// for a presentation based on the element with given id ('impress'</span>
+    <span class="hljs-comment">// by default).</span>
+    <span class="hljs-keyword">var</span> impress = <span class="hljs-built_in">window</span>.impress = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> rootId </span>) </span>{
+
+        <span class="hljs-comment">// If impress.js is not supported by the browser return a dummy API</span>
+        <span class="hljs-comment">// it may not be a perfect solution but we return early and avoid</span>
+        <span class="hljs-comment">// running code that may use features not implemented in the browser.</span>
+        <span class="hljs-keyword">if</span> ( !impressSupported ) {
+            <span class="hljs-keyword">return</span> {
+                init: empty,
+                goto: empty,
+                prev: empty,
+                next: empty
+            };
+        }
+
+        rootId = rootId || <span class="hljs-string">"impress"</span>;
+
+        <span class="hljs-comment">// If given root is already initialized just return the API</span>
+        <span class="hljs-keyword">if</span> ( roots[ <span class="hljs-string">"impress-root-"</span> + rootId ] ) {
+            <span class="hljs-keyword">return</span> roots[ <span class="hljs-string">"impress-root-"</span> + rootId ];
+        }
+
+        <span class="hljs-comment">// Data of all presentation steps</span>
+        <span class="hljs-keyword">var</span> stepsData = {};
+
+        <span class="hljs-comment">// Element of currently active step</span>
+        <span class="hljs-keyword">var</span> activeStep = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// Current state (position, rotation and scale) of the presentation</span>
+        <span class="hljs-keyword">var</span> currentState = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// Array of step elements</span>
+        <span class="hljs-keyword">var</span> steps = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// Configuration options</span>
+        <span class="hljs-keyword">var</span> config = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// Scale factor of the browser window</span>
+        <span class="hljs-keyword">var</span> windowScale = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// Root presentation elements</span>
+        <span class="hljs-keyword">var</span> root = byId( rootId );
+        <span class="hljs-keyword">var</span> canvas = <span class="hljs-built_in">document</span>.createElement( <span class="hljs-string">"div"</span> );
+
+        <span class="hljs-keyword">var</span> initialized = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-comment">// STEP EVENTS</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-comment">// There are currently two step events triggered by impress.js</span>
+        <span class="hljs-comment">// `impress:stepenter` is triggered when the step is shown on the</span>
+        <span class="hljs-comment">// screen (the transition from the previous one is finished) and</span>
+        <span class="hljs-comment">// `impress:stepleave` is triggered when the step is left (the</span>
+        <span class="hljs-comment">// transition to next step just starts).</span>
+
+        <span class="hljs-comment">// Reference to last entered step</span>
+        <span class="hljs-keyword">var</span> lastEntered = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// `onStepEnter` is called whenever the step element is entered</span>
+        <span class="hljs-comment">// but the event is triggered only if the step is different than</span>
+        <span class="hljs-comment">// last entered step.</span>
+        <span class="hljs-keyword">var</span> onStepEnter = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> step </span>) </span>{
+            <span class="hljs-keyword">if</span> ( lastEntered !== step ) {
+                triggerEvent( step, <span class="hljs-string">"impress:stepenter"</span> );
+                lastEntered = step;
+            }
+        };
+
+        <span class="hljs-comment">// `onStepLeave` is called whenever the step element is left</span>
+        <span class="hljs-comment">// but the event is triggered only if the step is the same as</span>
+        <span class="hljs-comment">// last entered step.</span>
+        <span class="hljs-keyword">var</span> onStepLeave = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> step </span>) </span>{
+            <span class="hljs-keyword">if</span> ( lastEntered === step ) {
+                triggerEvent( step, <span class="hljs-string">"impress:stepleave"</span> );
+                lastEntered = <span class="hljs-literal">null</span>;
+            }
+        };
+
+        <span class="hljs-comment">// `initStep` initializes given step element by reading data from its</span>
+        <span class="hljs-comment">// data attributes and setting correct styles.</span>
+        <span class="hljs-keyword">var</span> initStep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> el, idx </span>) </span>{
+            <span class="hljs-keyword">var</span> data = el.dataset,
+                step = {
+                    translate: {
+                        x: toNumber( data.x ),
+                        y: toNumber( data.y ),
+                        z: toNumber( data.z )
+                    },
+                    rotate: {
+                        x: toNumber( data.rotateX ),
+                        y: toNumber( data.rotateY ),
+                        z: toNumber( data.rotateZ || data.rotate )
+                    },
+                    scale: toNumber( data.scale, <span class="hljs-number">1</span> ),
+                    el: el
+                };
+
+            <span class="hljs-keyword">if</span> ( !el.id ) {
+                el.id = <span class="hljs-string">"step-"</span> + ( idx + <span class="hljs-number">1</span> );
+            }
+
+            stepsData[ <span class="hljs-string">"impress-"</span> + el.id ] = step;
+
+            css( el, {
+                position: <span class="hljs-string">"absolute"</span>,
+                transform: <span class="hljs-string">"translate(-50%,-50%)"</span> +
+                           translate( step.translate ) +
+                           rotate( step.rotate ) +
+                           scale( step.scale ),
+                transformStyle: <span class="hljs-string">"preserve-3d"</span>
+            } );
+        };
+
+        <span class="hljs-comment">// `init` API function that initializes (and runs) the presentation.</span>
+        <span class="hljs-keyword">var</span> init = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">if</span> ( initialized ) { <span class="hljs-keyword">return</span>; }
+
+            <span class="hljs-comment">// First we set up the viewport for mobile devices.</span>
+            <span class="hljs-comment">// For some reason iPad goes nuts when it is not done properly.</span>
+            <span class="hljs-keyword">var</span> meta = $( <span class="hljs-string">"meta[name='viewport']"</span> ) || <span class="hljs-built_in">document</span>.createElement( <span class="hljs-string">"meta"</span> );
+            meta.content = <span class="hljs-string">"width=device-width, minimum-scale=1, maximum-scale=1, user-scalable=no"</span>;
+            <span class="hljs-keyword">if</span> ( meta.parentNode !== <span class="hljs-built_in">document</span>.head ) {
+                meta.name = <span class="hljs-string">"viewport"</span>;
+                <span class="hljs-built_in">document</span>.head.appendChild( meta );
+            }
+
+            <span class="hljs-comment">// Initialize configuration object</span>
+            <span class="hljs-keyword">var</span> rootData = root.dataset;
+            config = {
+                width: toNumber( rootData.width, defaults.width ),
+                height: toNumber( rootData.height, defaults.height ),
+                maxScale: toNumber( rootData.maxScale, defaults.maxScale ),
+                minScale: toNumber( rootData.minScale, defaults.minScale ),
+                perspective: toNumber( rootData.perspective, defaults.perspective ),
+                transitionDuration: toNumber(
+                  rootData.transitionDuration, defaults.transitionDuration
+                )
+            };
+
+            windowScale = computeWindowScale( config );
+
+            <span class="hljs-comment">// Wrap steps with "canvas" element</span>
+            arrayify( root.childNodes ).forEach( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> el </span>) </span>{
+                canvas.appendChild( el );
+            } );
+            root.appendChild( canvas );
+
+            <span class="hljs-comment">// Set initial styles</span>
+            <span class="hljs-built_in">document</span>.documentElement.style.height = <span class="hljs-string">"100%"</span>;
+
+            css( body, {
+                height: <span class="hljs-string">"100%"</span>,
+                overflow: <span class="hljs-string">"hidden"</span>
+            } );
+
+            <span class="hljs-keyword">var</span> rootStyles = {
+                position: <span class="hljs-string">"absolute"</span>,
+                transformOrigin: <span class="hljs-string">"top left"</span>,
+                transition: <span class="hljs-string">"all 0s ease-in-out"</span>,
+                transformStyle: <span class="hljs-string">"preserve-3d"</span>
+            };
+
+            css( root, rootStyles );
+            css( root, {
+                top: <span class="hljs-string">"50%"</span>,
+                left: <span class="hljs-string">"50%"</span>,
+                transform: perspective( config.perspective / windowScale ) + scale( windowScale )
+            } );
+            css( canvas, rootStyles );
+
+            body.classList.remove( <span class="hljs-string">"impress-disabled"</span> );
+            body.classList.add( <span class="hljs-string">"impress-enabled"</span> );
+
+            <span class="hljs-comment">// Get and init steps</span>
+            steps = $$( <span class="hljs-string">".step"</span>, root );
+            steps.forEach( initStep );
+
+            <span class="hljs-comment">// Set a default initial state of the canvas</span>
+            currentState = {
+                translate: { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span> },
+                rotate:    { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span> },
+                scale:     <span class="hljs-number">1</span>
+            };
+
+            initialized = <span class="hljs-literal">true</span>;
+
+            triggerEvent( root, <span class="hljs-string">"impress:init"</span>, { api: roots[ <span class="hljs-string">"impress-root-"</span> + rootId ] } );
+        };
+
+        <span class="hljs-comment">// `getStep` is a helper function that returns a step element defined by parameter.</span>
+        <span class="hljs-comment">// If a number is given, step with index given by the number is returned, if a string</span>
+        <span class="hljs-comment">// is given step element with such id is returned, if DOM element is given it is returned</span>
+        <span class="hljs-comment">// if it is a correct step element.</span>
+        <span class="hljs-keyword">var</span> getStep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> step </span>) </span>{
+            <span class="hljs-keyword">if</span> ( <span class="hljs-keyword">typeof</span> step === <span class="hljs-string">"number"</span> ) {
+                step = step &lt; <span class="hljs-number">0</span> ? steps[ steps.length + step ] : steps[ step ];
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ( <span class="hljs-keyword">typeof</span> step === <span class="hljs-string">"string"</span> ) {
+                step = byId( step );
+            }
+            <span class="hljs-keyword">return</span> ( step &amp;&amp; step.id &amp;&amp; stepsData[ <span class="hljs-string">"impress-"</span> + step.id ] ) ? step : <span class="hljs-literal">null</span>;
+        };
+
+        <span class="hljs-comment">// Used to reset timeout for `impress:stepenter` event</span>
+        <span class="hljs-keyword">var</span> stepEnterTimeout = <span class="hljs-literal">null</span>;
+
+        <span class="hljs-comment">// `goto` API function that moves to step given with `el` parameter</span>
+        <span class="hljs-comment">// (by index, id or element), with a transition `duration` optionally</span>
+        <span class="hljs-comment">// given as second parameter.</span>
+        <span class="hljs-keyword">var</span> goto = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> el, duration </span>) </span>{
+
+            <span class="hljs-keyword">if</span> ( !initialized || !( el = getStep( el ) ) ) {
+
+                <span class="hljs-comment">// Presentation not initialized or given element is not a step</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+
+            <span class="hljs-comment">// Sometimes it's possible to trigger focus on first link with some keyboard action.</span>
+            <span class="hljs-comment">// Browser in such a case tries to scroll the page to make this element visible</span>
+            <span class="hljs-comment">// (even that body overflow is set to hidden) and it breaks our careful positioning.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// So, as a lousy (and lazy) workaround we will make the page scroll back to the top</span>
+            <span class="hljs-comment">// whenever slide is selected</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// If you are reading this and know any better way to handle it, I'll be glad to hear</span>
+            <span class="hljs-comment">// about it!</span>
+            <span class="hljs-built_in">window</span>.scrollTo( <span class="hljs-number">0</span>, <span class="hljs-number">0</span> );
+
+            <span class="hljs-keyword">var</span> step = stepsData[ <span class="hljs-string">"impress-"</span> + el.id ];
+
+            <span class="hljs-keyword">if</span> ( activeStep ) {
+                activeStep.classList.remove( <span class="hljs-string">"active"</span> );
+                body.classList.remove( <span class="hljs-string">"impress-on-"</span> + activeStep.id );
+            }
+            el.classList.add( <span class="hljs-string">"active"</span> );
+
+            body.classList.add( <span class="hljs-string">"impress-on-"</span> + el.id );
+
+            <span class="hljs-comment">// Compute target state of the canvas based on given step</span>
+            <span class="hljs-keyword">var</span> target = {
+                rotate: {
+                    x: -step.rotate.x,
+                    y: -step.rotate.y,
+                    z: -step.rotate.z
+                },
+                translate: {
+                    x: -step.translate.x,
+                    y: -step.translate.y,
+                    z: -step.translate.z
+                },
+                scale: <span class="hljs-number">1</span> / step.scale
+            };
+
+            <span class="hljs-comment">// Check if the transition is zooming in or not.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// This information is used to alter the transition style:</span>
+            <span class="hljs-comment">// when we are zooming in - we start with move and rotate transition</span>
+            <span class="hljs-comment">// and the scaling is delayed, but when we are zooming out we start</span>
+            <span class="hljs-comment">// with scaling down and move and rotation are delayed.</span>
+            <span class="hljs-keyword">var</span> zoomin = target.scale &gt;= currentState.scale;
+
+            duration = toNumber( duration, config.transitionDuration );
+            <span class="hljs-keyword">var</span> delay = ( duration / <span class="hljs-number">2</span> );
+
+            <span class="hljs-comment">// If the same step is re-selected, force computing window scaling,</span>
+            <span class="hljs-comment">// because it is likely to be caused by window resize</span>
+            <span class="hljs-keyword">if</span> ( el === activeStep ) {
+                windowScale = computeWindowScale( config );
+            }
+
+            <span class="hljs-keyword">var</span> targetScale = target.scale * windowScale;
+
+            <span class="hljs-comment">// Trigger leave of currently active element (if it's not the same step again)</span>
+            <span class="hljs-keyword">if</span> ( activeStep &amp;&amp; activeStep !== el ) {
+                onStepLeave( activeStep );
+            }
+
+            <span class="hljs-comment">// Now we alter transforms of `root` and `canvas` to trigger transitions.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// And here is why there are two elements: `root` and `canvas` - they are</span>
+            <span class="hljs-comment">// being animated separately:</span>
+            <span class="hljs-comment">// `root` is used for scaling and `canvas` for translate and rotations.</span>
+            <span class="hljs-comment">// Transitions on them are triggered with different delays (to make</span>
+            <span class="hljs-comment">// visually nice and 'natural' looking transitions), so we need to know</span>
+            <span class="hljs-comment">// that both of them are finished.</span>
+            css( root, {
+
+                <span class="hljs-comment">// To keep the perspective look similar for different scales</span>
+                <span class="hljs-comment">// we need to 'scale' the perspective, too</span>
+                transform: perspective( config.perspective / targetScale ) + scale( targetScale ),
+                transitionDuration: duration + <span class="hljs-string">"ms"</span>,
+                transitionDelay: ( zoomin ? delay : <span class="hljs-number">0</span> ) + <span class="hljs-string">"ms"</span>
+            } );
+
+            css( canvas, {
+                transform: rotate( target.rotate, <span class="hljs-literal">true</span> ) + translate( target.translate ),
+                transitionDuration: duration + <span class="hljs-string">"ms"</span>,
+                transitionDelay: ( zoomin ? <span class="hljs-number">0</span> : delay ) + <span class="hljs-string">"ms"</span>
+            } );
+
+            <span class="hljs-comment">// Here is a tricky part...</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// If there is no change in scale or no change in rotation and translation, it means</span>
+            <span class="hljs-comment">// there was actually no delay - because there was no transition on `root` or `canvas`</span>
+            <span class="hljs-comment">// elements. We want to trigger `impress:stepenter` event in the correct moment, so</span>
+            <span class="hljs-comment">// here we compare the current and target values to check if delay should be taken into</span>
+            <span class="hljs-comment">// account.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// I know that this `if` statement looks scary, but it's pretty simple when you know</span>
+            <span class="hljs-comment">// what is going on</span>
+            <span class="hljs-comment">// - it's simply comparing all the values.</span>
+            <span class="hljs-keyword">if</span> ( currentState.scale === target.scale ||
+                ( currentState.rotate.x === target.rotate.x &amp;&amp;
+                  currentState.rotate.y === target.rotate.y &amp;&amp;
+                  currentState.rotate.z === target.rotate.z &amp;&amp;
+                  currentState.translate.x === target.translate.x &amp;&amp;
+                  currentState.translate.y === target.translate.y &amp;&amp;
+                  currentState.translate.z === target.translate.z ) ) {
+                delay = <span class="hljs-number">0</span>;
+            }
+
+            <span class="hljs-comment">// Store current state</span>
+            currentState = target;
+            activeStep = el;
+
+            <span class="hljs-comment">// And here is where we trigger `impress:stepenter` event.</span>
+            <span class="hljs-comment">// We simply set up a timeout to fire it taking transition duration</span>
+            <span class="hljs-comment">// (and possible delay) into account.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// I really wanted to make it in more elegant way. The `transitionend` event seemed to</span>
+            <span class="hljs-comment">// be the best way to do it, but the fact that I'm using transitions on two separate</span>
+            <span class="hljs-comment">// elements and that the `transitionend` event is only triggered when there was a</span>
+            <span class="hljs-comment">// transition (change in the values) caused some bugs and made the code really</span>
+            <span class="hljs-comment">// complicated, cause I had to handle all the conditions separately. And it still</span>
+            <span class="hljs-comment">// needed a `setTimeout` fallback for the situations when there is no transition at</span>
+            <span class="hljs-comment">// all.</span>
+            <span class="hljs-comment">// So I decided that I'd rather make the code simpler than use shiny new</span>
+            <span class="hljs-comment">// `transitionend`.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// If you want learn something interesting and see how it was done with `transitionend`</span>
+            <span class="hljs-comment">// go back to</span>
+            <span class="hljs-comment">// version 0.5.2 of impress.js:</span>
+            <span class="hljs-comment">// http://github.com/bartaz/impress.js/blob/0.5.2/js/impress.js</span>
+            <span class="hljs-built_in">window</span>.clearTimeout( stepEnterTimeout );
+            stepEnterTimeout = <span class="hljs-built_in">window</span>.setTimeout( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                onStepEnter( activeStep );
+            }, duration + delay );
+
+            <span class="hljs-keyword">return</span> el;
+        };
+
+        <span class="hljs-comment">// `prev` API function goes to previous step (in document order)</span>
+        <span class="hljs-keyword">var</span> prev = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> prev = steps.indexOf( activeStep ) - <span class="hljs-number">1</span>;
+            prev = prev &gt;= <span class="hljs-number">0</span> ? steps[ prev ] : steps[ steps.length - <span class="hljs-number">1</span> ];
+
+            <span class="hljs-keyword">return</span> goto( prev );
+        };
+
+        <span class="hljs-comment">// `next` API function goes to next step (in document order)</span>
+        <span class="hljs-keyword">var</span> next = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> next = steps.indexOf( activeStep ) + <span class="hljs-number">1</span>;
+            next = next &lt; steps.length ? steps[ next ] : steps[ <span class="hljs-number">0</span> ];
+
+            <span class="hljs-keyword">return</span> goto( next );
+        };
+
+        <span class="hljs-comment">// Adding some useful classes to step elements.</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-comment">// All the steps that have not been shown yet are given `future` class.</span>
+        <span class="hljs-comment">// When the step is entered the `future` class is removed and the `present`</span>
+        <span class="hljs-comment">// class is given. When the step is left `present` class is replaced with</span>
+        <span class="hljs-comment">// `past` class.</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-comment">// So every step element is always in one of three possible states:</span>
+        <span class="hljs-comment">// `future`, `present` and `past`.</span>
+        <span class="hljs-comment">//</span>
+        <span class="hljs-comment">// There classes can be used in CSS to style different types of steps.</span>
+        <span class="hljs-comment">// For example the `present` class can be used to trigger some custom</span>
+        <span class="hljs-comment">// animations when step is shown.</span>
+        root.addEventListener( <span class="hljs-string">"impress:init"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+            <span class="hljs-comment">// STEP CLASSES</span>
+            steps.forEach( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> step </span>) </span>{
+                step.classList.add( <span class="hljs-string">"future"</span> );
+            } );
+
+            root.addEventListener( <span class="hljs-string">"impress:stepenter"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+                event.target.classList.remove( <span class="hljs-string">"past"</span> );
+                event.target.classList.remove( <span class="hljs-string">"future"</span> );
+                event.target.classList.add( <span class="hljs-string">"present"</span> );
+            }, <span class="hljs-literal">false</span> );
+
+            root.addEventListener( <span class="hljs-string">"impress:stepleave"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+                event.target.classList.remove( <span class="hljs-string">"present"</span> );
+                event.target.classList.add( <span class="hljs-string">"past"</span> );
+            }, <span class="hljs-literal">false</span> );
+
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Adding hash change support.</span>
+        root.addEventListener( <span class="hljs-string">"impress:init"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+            <span class="hljs-comment">// Last hash detected</span>
+            <span class="hljs-keyword">var</span> lastHash = <span class="hljs-string">""</span>;
+
+            <span class="hljs-comment">// `#/step-id` is used instead of `#step-id` to prevent default browser</span>
+            <span class="hljs-comment">// scrolling to element in hash.</span>
+            <span class="hljs-comment">//</span>
+            <span class="hljs-comment">// And it has to be set after animation finishes, because in Chrome it</span>
+            <span class="hljs-comment">// makes transtion laggy.</span>
+            <span class="hljs-comment">// <span class="hljs-doctag">BUG:</span> http://code.google.com/p/chromium/issues/detail?id=62820</span>
+            root.addEventListener( <span class="hljs-string">"impress:stepenter"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+                <span class="hljs-built_in">window</span>.location.hash = lastHash = <span class="hljs-string">"#/"</span> + event.target.id;
+            }, <span class="hljs-literal">false</span> );
+
+            <span class="hljs-built_in">window</span>.addEventListener( <span class="hljs-string">"hashchange"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+                <span class="hljs-comment">// When the step is entered hash in the location is updated</span>
+                <span class="hljs-comment">// (just few lines above from here), so the hash change is</span>
+                <span class="hljs-comment">// triggered and we would call `goto` again on the same element.</span>
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// To avoid this we store last entered hash and compare.</span>
+                <span class="hljs-keyword">if</span> ( <span class="hljs-built_in">window</span>.location.hash !== lastHash ) {
+                    goto( getElementFromHash() );
+                }
+            }, <span class="hljs-literal">false</span> );
+
+            <span class="hljs-comment">// START</span>
+            <span class="hljs-comment">// by selecting step defined in url or first step of the presentation</span>
+            goto( getElementFromHash() || steps[ <span class="hljs-number">0</span> ], <span class="hljs-number">0</span> );
+        }, <span class="hljs-literal">false</span> );
+
+        body.classList.add( <span class="hljs-string">"impress-disabled"</span> );
+
+        <span class="hljs-comment">// Store and return API for given impress.js root element</span>
+        <span class="hljs-keyword">return</span> ( roots[ <span class="hljs-string">"impress-root-"</span> + rootId ] = {
+            init: init,
+            goto: goto,
+            next: next,
+            prev: prev
+        } );
+
+    };
+
+    <span class="hljs-comment">// Flag that can be used in JS to check if browser have passed the support test</span>
+    impress.supported = impressSupported;
+
+} )( <span class="hljs-built_in">document</span>, <span class="hljs-built_in">window</span> );
+
+<span class="hljs-comment">// NAVIGATION EVENTS</span>
+
+<span class="hljs-comment">// As you can see this part is separate from the impress.js core code.</span>
+<span class="hljs-comment">// It's because these navigation actions only need what impress.js provides with</span>
+<span class="hljs-comment">// its simple API.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// In future I think about moving it to make them optional, move to separate files</span>
+<span class="hljs-comment">// and treat more like a 'plugins'.</span>
+( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> document, window </span>) </span>{
+<span class="hljs-meta">    "use strict"</span>;
+
+    <span class="hljs-comment">// Throttling function calls, by Remy Sharp</span>
+    <span class="hljs-comment">// http://remysharp.com/2010/07/21/throttling-function-calls/</span>
+    <span class="hljs-keyword">var</span> throttle = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> fn, delay </span>) </span>{
+        <span class="hljs-keyword">var</span> timer = <span class="hljs-literal">null</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">this</span>, args = <span class="hljs-built_in">arguments</span>;
+            clearTimeout( timer );
+            timer = setTimeout( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                fn.apply( context, args );
+            }, delay );
+        };
+    };
+
+    <span class="hljs-comment">// Wait for impress.js to be initialized</span>
+    <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"impress:init"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+
+        <span class="hljs-comment">// Getting API from event data.</span>
+        <span class="hljs-comment">// So you don't event need to know what is the id of the root element</span>
+        <span class="hljs-comment">// or anything. `impress:init` event data gives you everything you</span>
+        <span class="hljs-comment">// need to control the presentation that was just initialized.</span>
+        <span class="hljs-keyword">var</span> api = event.detail.api;
+
+        <span class="hljs-comment">// KEYBOARD NAVIGATION HANDLERS</span>
+
+        <span class="hljs-comment">// Prevent default keydown action when one of supported key is pressed.</span>
+        <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"keydown"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+            <span class="hljs-keyword">if</span> ( event.keyCode === <span class="hljs-number">9</span> ||
+               ( event.keyCode &gt;= <span class="hljs-number">32</span> &amp;&amp; event.keyCode &lt;= <span class="hljs-number">34</span> ) ||
+               ( event.keyCode &gt;= <span class="hljs-number">37</span> &amp;&amp; event.keyCode &lt;= <span class="hljs-number">40</span> ) ) {
+                event.preventDefault();
+            }
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Trigger impress action (next or prev) on keyup.</span>
+
+        <span class="hljs-comment">// Supported keys are:</span>
+        <span class="hljs-comment">// [space] - quite common in presentation software to move forward</span>
+        <span class="hljs-comment">// [up] [right] / [down] [left] - again common and natural addition,</span>
+        <span class="hljs-comment">// [pgdown] / [pgup] - often triggered by remote controllers,</span>
+        <span class="hljs-comment">// [tab] - this one is quite controversial, but the reason it ended up on</span>
+        <span class="hljs-comment">//   this list is quite an interesting story... Remember that strange part</span>
+        <span class="hljs-comment">//   in the impress.js code where window is scrolled to 0,0 on every presentation</span>
+        <span class="hljs-comment">//   step, because sometimes browser scrolls viewport because of the focused element?</span>
+        <span class="hljs-comment">//   Well, the [tab] key by default navigates around focusable elements, so clicking</span>
+        <span class="hljs-comment">//   it very often caused scrolling to focused element and breaking impress.js</span>
+        <span class="hljs-comment">//   positioning. I didn't want to just prevent this default action, so I used [tab]</span>
+        <span class="hljs-comment">//   as another way to moving to next step... And yes, I know that for the sake of</span>
+        <span class="hljs-comment">//   consistency I should add [shift+tab] as opposite action...</span>
+        <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"keyup"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+
+            <span class="hljs-keyword">if</span> ( event.shiftKey || event.altKey || event.ctrlKey || event.metaKey ) {
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-keyword">if</span> ( event.keyCode === <span class="hljs-number">9</span> ||
+               ( event.keyCode &gt;= <span class="hljs-number">32</span> &amp;&amp; event.keyCode &lt;= <span class="hljs-number">34</span> ) ||
+               ( event.keyCode &gt;= <span class="hljs-number">37</span> &amp;&amp; event.keyCode &lt;= <span class="hljs-number">40</span> ) ) {
+                <span class="hljs-keyword">switch</span> ( event.keyCode ) {
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">33</span>: <span class="hljs-comment">// Page up</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">37</span>: <span class="hljs-comment">// Left</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">38</span>: <span class="hljs-comment">// Up</span>
+                             api.prev();
+                             <span class="hljs-keyword">break</span>;
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">9</span>:  <span class="hljs-comment">// Tab</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">32</span>: <span class="hljs-comment">// Space</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">34</span>: <span class="hljs-comment">// Page down</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">39</span>: <span class="hljs-comment">// Right</span>
+                    <span class="hljs-keyword">case</span> <span class="hljs-number">40</span>: <span class="hljs-comment">// Down</span>
+                             api.next();
+                             <span class="hljs-keyword">break</span>;
+                }
+
+                event.preventDefault();
+            }
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Delegated handler for clicking on the links to presentation steps</span>
+        <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+
+            <span class="hljs-comment">// Event delegation with "bubbling"</span>
+            <span class="hljs-comment">// Check if event target (or any of its parents is a link)</span>
+            <span class="hljs-keyword">var</span> target = event.target;
+            <span class="hljs-keyword">while</span> ( ( target.tagName !== <span class="hljs-string">"A"</span> ) &amp;&amp;
+                    ( target !== <span class="hljs-built_in">document</span>.documentElement ) ) {
+                target = target.parentNode;
+            }
+
+            <span class="hljs-keyword">if</span> ( target.tagName === <span class="hljs-string">"A"</span> ) {
+                <span class="hljs-keyword">var</span> href = target.getAttribute( <span class="hljs-string">"href"</span> );
+
+                <span class="hljs-comment">// If it's a link to presentation step, target this step</span>
+                <span class="hljs-keyword">if</span> ( href &amp;&amp; href[ <span class="hljs-number">0</span> ] === <span class="hljs-string">"#"</span> ) {
+                    target = <span class="hljs-built_in">document</span>.getElementById( href.slice( <span class="hljs-number">1</span> ) );
+                }
+            }
+
+            <span class="hljs-keyword">if</span> ( api.goto( target ) ) {
+                event.stopImmediatePropagation();
+                event.preventDefault();
+            }
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Delegated handler for clicking on step elements</span>
+        <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+            <span class="hljs-keyword">var</span> target = event.target;
+
+            <span class="hljs-comment">// Find closest step element that is not active</span>
+            <span class="hljs-keyword">while</span> ( !( target.classList.contains( <span class="hljs-string">"step"</span> ) &amp;&amp;
+                      !target.classList.contains( <span class="hljs-string">"active"</span> ) ) &amp;&amp;
+                      ( target !== <span class="hljs-built_in">document</span>.documentElement ) ) {
+                target = target.parentNode;
+            }
+
+            <span class="hljs-keyword">if</span> ( api.goto( target ) ) {
+                event.preventDefault();
+            }
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Touch handler to detect taps on the left and right side of the screen</span>
+        <span class="hljs-comment">// based on awesome work of @hakimel: https://github.com/hakimel/reveal.js</span>
+        <span class="hljs-built_in">document</span>.addEventListener( <span class="hljs-string">"touchstart"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> event </span>) </span>{
+            <span class="hljs-keyword">if</span> ( event.touches.length === <span class="hljs-number">1</span> ) {
+                <span class="hljs-keyword">var</span> x = event.touches[ <span class="hljs-number">0</span> ].clientX,
+                    width = <span class="hljs-built_in">window</span>.innerWidth * <span class="hljs-number">0.3</span>,
+                    result = <span class="hljs-literal">null</span>;
+
+                <span class="hljs-keyword">if</span> ( x &lt; width ) {
+                    result = api.prev();
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ( x &gt; <span class="hljs-built_in">window</span>.innerWidth - width ) {
+                    result = api.next();
+                }
+
+                <span class="hljs-keyword">if</span> ( result ) {
+                    event.preventDefault();
+                }
+            }
+        }, <span class="hljs-literal">false</span> );
+
+        <span class="hljs-comment">// Rescale presentation when window is resized</span>
+        <span class="hljs-built_in">window</span>.addEventListener( <span class="hljs-string">"resize"</span>, throttle( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+            <span class="hljs-comment">// Force going to active step again, to trigger rescaling</span>
+            api.goto( <span class="hljs-built_in">document</span>.querySelector( <span class="hljs-string">".step.active"</span> ), <span class="hljs-number">500</span> );
+        }, <span class="hljs-number">250</span> ), <span class="hljs-literal">false</span> );
+
+    }, <span class="hljs-literal">false</span> );
+
+} )( <span class="hljs-built_in">document</span>, <span class="hljs-built_in">window</span> );
+
+<span class="hljs-comment">// THAT'S ALL FOLKS!</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Thanks for reading it all.</span>
+<span class="hljs-comment">// Or thanks for scrolling down and reading the last part.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// I've learnt a lot when building impress.js and I hope this code and comments</span>
+<span class="hljs-comment">// will help somebody learn at least some part of it.</span></code></pre>    </article>
+  </body>
+</html>

@@ -1,0 +1,716 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/github-markdown.css">
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/pilcrow.css">
+    <link type="text/css" rel="stylesheet" href="..\..\assets/css/hljs-github.min.css"/>
+  </head>
+  <body>
+    <article class="markdown-body"><pre class="hljs"><code><span class="hljs-comment">/*
+    So you like the style of impress.js demo?
+    Or maybe you are just curious how it was done?
+
+    You couldn't find a better place to find out!
+
+    Welcome to the stylesheet impress.js demo presentation.
+
+    Please remember that it is not meant to be a part of impress.js and is
+    not required by impress.js.
+    I expect that anyone creating a presentation for impress.js would create
+    their own set of styles.
+
+    But feel free to read through it and learn how to get the most of what
+    impress.js provides.
+
+    And let me be your guide.
+
+    Shall we begin?
+*/</span>
+
+
+<span class="hljs-comment">/*
+    We start with a good ol' reset.
+    That's the one by Eric Meyer http://meyerweb.com/eric/tools/css/reset/
+
+    You can probably argue if it is needed here, or not, but for sure it
+    doesn't do any harm and gives us a fresh start.
+*/</span>
+
+<span class="hljs-selector-tag">html</span>, <span class="hljs-selector-tag">body</span>, <span class="hljs-selector-tag">div</span>, <span class="hljs-selector-tag">span</span>, <span class="hljs-selector-tag">applet</span>, <span class="hljs-selector-tag">object</span>, <span class="hljs-selector-tag">iframe</span>,
+<span class="hljs-selector-tag">h1</span>, <span class="hljs-selector-tag">h2</span>, <span class="hljs-selector-tag">h3</span>, <span class="hljs-selector-tag">h4</span>, <span class="hljs-selector-tag">h5</span>, <span class="hljs-selector-tag">h6</span>, <span class="hljs-selector-tag">p</span>, <span class="hljs-selector-tag">blockquote</span>, <span class="hljs-selector-tag">pre</span>,
+<span class="hljs-selector-tag">a</span>, <span class="hljs-selector-tag">abbr</span>, <span class="hljs-selector-tag">acronym</span>, <span class="hljs-selector-tag">address</span>, <span class="hljs-selector-tag">big</span>, <span class="hljs-selector-tag">cite</span>, <span class="hljs-selector-tag">code</span>,
+<span class="hljs-selector-tag">del</span>, <span class="hljs-selector-tag">dfn</span>, <span class="hljs-selector-tag">em</span>, <span class="hljs-selector-tag">img</span>, <span class="hljs-selector-tag">ins</span>, <span class="hljs-selector-tag">kbd</span>, <span class="hljs-selector-tag">q</span>, <span class="hljs-selector-tag">s</span>, <span class="hljs-selector-tag">samp</span>,
+<span class="hljs-selector-tag">small</span>, <span class="hljs-selector-tag">strike</span>, <span class="hljs-selector-tag">strong</span>, <span class="hljs-selector-tag">sub</span>, <span class="hljs-selector-tag">sup</span>, <span class="hljs-selector-tag">tt</span>, <span class="hljs-selector-tag">var</span>,
+<span class="hljs-selector-tag">b</span>, <span class="hljs-selector-tag">u</span>, <span class="hljs-selector-tag">i</span>, <span class="hljs-selector-tag">center</span>,
+<span class="hljs-selector-tag">dl</span>, <span class="hljs-selector-tag">dt</span>, <span class="hljs-selector-tag">dd</span>, <span class="hljs-selector-tag">ol</span>, <span class="hljs-selector-tag">ul</span>, <span class="hljs-selector-tag">li</span>,
+<span class="hljs-selector-tag">fieldset</span>, <span class="hljs-selector-tag">form</span>, <span class="hljs-selector-tag">label</span>, <span class="hljs-selector-tag">legend</span>,
+<span class="hljs-selector-tag">table</span>, <span class="hljs-selector-tag">caption</span>, <span class="hljs-selector-tag">tbody</span>, <span class="hljs-selector-tag">tfoot</span>, <span class="hljs-selector-tag">thead</span>, <span class="hljs-selector-tag">tr</span>, <span class="hljs-selector-tag">th</span>, <span class="hljs-selector-tag">td</span>,
+<span class="hljs-selector-tag">article</span>, <span class="hljs-selector-tag">aside</span>, <span class="hljs-selector-tag">canvas</span>, <span class="hljs-selector-tag">details</span>, <span class="hljs-selector-tag">embed</span>,
+<span class="hljs-selector-tag">figure</span>, <span class="hljs-selector-tag">figcaption</span>, <span class="hljs-selector-tag">footer</span>, <span class="hljs-selector-tag">header</span>, <span class="hljs-selector-tag">hgroup</span>,
+<span class="hljs-selector-tag">menu</span>, <span class="hljs-selector-tag">nav</span>, <span class="hljs-selector-tag">output</span>, <span class="hljs-selector-tag">ruby</span>, <span class="hljs-selector-tag">section</span>, <span class="hljs-selector-tag">summary</span>,
+<span class="hljs-selector-tag">time</span>, <span class="hljs-selector-tag">mark</span>, <span class="hljs-selector-tag">audio</span>, <span class="hljs-selector-tag">video</span> {
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">border</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">100%</span>;
+    <span class="hljs-attribute">font</span>: inherit;
+    <span class="hljs-attribute">vertical-align</span>: baseline;
+}
+
+<span class="hljs-comment">/* HTML5 display-role reset for older browsers */</span>
+<span class="hljs-selector-tag">article</span>, <span class="hljs-selector-tag">aside</span>, <span class="hljs-selector-tag">details</span>, <span class="hljs-selector-tag">figcaption</span>, <span class="hljs-selector-tag">figure</span>,
+<span class="hljs-selector-tag">footer</span>, <span class="hljs-selector-tag">header</span>, <span class="hljs-selector-tag">hgroup</span>, <span class="hljs-selector-tag">menu</span>, <span class="hljs-selector-tag">nav</span>, <span class="hljs-selector-tag">section</span> {
+    <span class="hljs-attribute">display</span>: block;
+}
+<span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1</span>;
+}
+<span class="hljs-selector-tag">ol</span>, <span class="hljs-selector-tag">ul</span> {
+    <span class="hljs-attribute">list-style</span>: none;
+}
+<span class="hljs-selector-tag">blockquote</span>, <span class="hljs-selector-tag">q</span> {
+    <span class="hljs-attribute">quotes</span>: none;
+}
+<span class="hljs-selector-tag">blockquote</span><span class="hljs-selector-pseudo">:before</span>, <span class="hljs-selector-tag">blockquote</span><span class="hljs-selector-pseudo">:after</span>,
+<span class="hljs-selector-tag">q</span><span class="hljs-selector-pseudo">:before</span>, <span class="hljs-selector-tag">q</span><span class="hljs-selector-pseudo">:after</span> {
+    <span class="hljs-attribute">content</span>: <span class="hljs-string">''</span>;
+    <span class="hljs-attribute">content</span>: none;
+}
+
+<span class="hljs-selector-tag">table</span> {
+    <span class="hljs-attribute">border-collapse</span>: collapse;
+    <span class="hljs-attribute">border-spacing</span>: <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-comment">/*
+    Now here is when interesting things start to appear.
+
+    We set up &lt;body&gt; styles with default font and nice gradient in the background.
+    And yes, there is a lot of repetition there because of -prefixes but we don't
+    want to leave anybody behind.
+*/</span>
+<span class="hljs-selector-tag">body</span> {
+    <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'PT Sans'</span>, sans-serif;
+    <span class="hljs-attribute">min-height</span>: <span class="hljs-number">740px</span>;
+
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgb</span>(215, 215, 215);
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-gradient</span>(radial, 50% 50%, 0, 50% 50%, 500, from(rgb(240, 240, 240)), <span class="hljs-built_in">to</span>(rgb(190, 190, 190)));
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">-webkit-radial-gradient</span>(rgb(240, 240, 240), <span class="hljs-built_in">rgb</span>(190, 190, 190));
+    <span class="hljs-attribute">background</span>:    <span class="hljs-built_in">-moz-radial-gradient</span>(rgb(240, 240, 240), <span class="hljs-built_in">rgb</span>(190, 190, 190));
+    <span class="hljs-attribute">background</span>:     <span class="hljs-built_in">-ms-radial-gradient</span>(rgb(240, 240, 240), <span class="hljs-built_in">rgb</span>(190, 190, 190));
+    <span class="hljs-attribute">background</span>:      <span class="hljs-built_in">-o-radial-gradient</span>(rgb(240, 240, 240), <span class="hljs-built_in">rgb</span>(190, 190, 190));
+    <span class="hljs-attribute">background</span>:         <span class="hljs-built_in">radial-gradient</span>(rgb(240, 240, 240), <span class="hljs-built_in">rgb</span>(190, 190, 190));
+}
+
+<span class="hljs-comment">/*
+    Now let's bring some text styles back ...
+*/</span>
+<span class="hljs-selector-tag">b</span>, <span class="hljs-selector-tag">strong</span> { <span class="hljs-attribute">font-weight</span>: bold }
+<span class="hljs-selector-tag">i</span>, <span class="hljs-selector-tag">em</span> { <span class="hljs-attribute">font-style</span>: italic }
+
+<span class="hljs-comment">/*
+    ... and give links a nice look.
+*/</span>
+<span class="hljs-selector-tag">a</span> {
+    <span class="hljs-attribute">color</span>: inherit;
+    <span class="hljs-attribute">text-decoration</span>: none;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span> <span class="hljs-number">0.1em</span>;
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgba</span>(255,255,255,0.5);
+    <span class="hljs-attribute">text-shadow</span>: -<span class="hljs-number">1px</span> -<span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-built_in">rgba</span>(100,100,100,0.9);
+    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0.2em</span>;
+
+    <span class="hljs-attribute">-webkit-transition</span>: <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">transition</span>:         <span class="hljs-number">0.5s</span>;
+}
+
+<span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:hover</span>,
+<span class="hljs-selector-tag">a</span><span class="hljs-selector-pseudo">:focus</span> {
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgba</span>(255,255,255,1);
+    <span class="hljs-attribute">text-shadow</span>: -<span class="hljs-number">1px</span> -<span class="hljs-number">1px</span> <span class="hljs-number">2px</span> <span class="hljs-built_in">rgba</span>(100,100,100,0.5);
+}
+
+<span class="hljs-comment">/*
+    Because the main point behind the impress.js demo is to demo impress.js
+    we display a fallback message for users with browsers that don't support
+    all the features required by it.
+
+    All of the content will be still fully accessible for them, but I want
+    them to know that they are missing something - that's what the demo is
+    about, isn't it?
+
+    And then we hide the message, when support is detected in the browser.
+*/</span>
+
+<span class="hljs-selector-class">.fallback-message</span> {
+    <span class="hljs-attribute">font-family</span>: sans-serif;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.3</span>;
+
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">780px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span> <span class="hljs-number">10px</span> <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span> auto;
+
+    <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#E4C652</span>;
+    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">10px</span>;
+    <span class="hljs-attribute">background</span>: <span class="hljs-number">#EEDC94</span>;
+}
+
+<span class="hljs-selector-class">.fallback-message</span> <span class="hljs-selector-tag">p</span> {
+    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">10px</span>;
+}
+
+<span class="hljs-selector-class">.impress-supported</span> <span class="hljs-selector-class">.fallback-message</span> {
+    <span class="hljs-attribute">display</span>: none;
+}
+
+<span class="hljs-comment">/*
+    Now let's style the presentation steps.
+
+    We start with basics to make sure it displays correctly in everywhere ...
+*/</span>
+
+<span class="hljs-selector-class">.step</span> {
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">900px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span>;
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">20px</span> auto;
+
+    <span class="hljs-attribute">-webkit-box-sizing</span>: border-box;
+    <span class="hljs-attribute">-moz-box-sizing</span>:    border-box;
+    <span class="hljs-attribute">-ms-box-sizing</span>:     border-box;
+    <span class="hljs-attribute">-o-box-sizing</span>:      border-box;
+    <span class="hljs-attribute">box-sizing</span>:         border-box;
+
+    <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'PT Serif'</span>, georgia, serif;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">48px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1.5</span>;
+}
+
+<span class="hljs-comment">/*
+    ... and we enhance the styles for impress.js.
+
+    Basically we remove the margin and make inactive steps a little bit transparent.
+*/</span>
+<span class="hljs-selector-class">.impress-enabled</span> <span class="hljs-selector-class">.step</span> {
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0.3</span>;
+
+    <span class="hljs-attribute">-webkit-transition</span>: opacity <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    opacity <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     opacity <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      opacity <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">transition</span>:         opacity <span class="hljs-number">1s</span>;
+}
+
+<span class="hljs-selector-class">.impress-enabled</span> <span class="hljs-selector-class">.step</span><span class="hljs-selector-class">.active</span> { <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span> }
+
+<span class="hljs-comment">/*
+    These 'slide' step styles were heavily inspired by HTML5 Slides:
+    http://html5slides.googlecode.com/svn/trunk/styles.css
+
+    ;)
+
+    They cover everything what you see on first three steps of the demo.
+*/</span>
+<span class="hljs-selector-class">.slide</span> {
+    <span class="hljs-attribute">display</span>: block;
+
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">900px</span>;
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">700px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">40px</span> <span class="hljs-number">60px</span>;
+
+    <span class="hljs-attribute">background-color</span>: white;
+    <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-built_in">rgba</span>(0, 0, 0, .3);
+    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">10px</span>;
+    <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">6px</span> <span class="hljs-built_in">rgba</span>(0, 0, 0, .1);
+
+    <span class="hljs-attribute">color</span>: <span class="hljs-built_in">rgb</span>(102, 102, 102);
+    <span class="hljs-attribute">text-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">2px</span> <span class="hljs-built_in">rgba</span>(0, 0, 0, .1);
+
+    <span class="hljs-attribute">font-family</span>: <span class="hljs-string">'Open Sans'</span>, Arial, sans-serif;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">30px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">36px</span>;
+    <span class="hljs-attribute">letter-spacing</span>: -<span class="hljs-number">1px</span>;
+}
+
+<span class="hljs-selector-class">.slide</span> <span class="hljs-selector-tag">q</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">72px</span>;
+
+    <span class="hljs-attribute">margin-top</span>: <span class="hljs-number">100px</span>;
+}
+
+<span class="hljs-selector-class">.slide</span> <span class="hljs-selector-tag">q</span> <span class="hljs-selector-tag">strong</span> {
+    <span class="hljs-attribute">white-space</span>: nowrap;
+}
+
+<span class="hljs-comment">/*
+    And now we start to style each step separately.
+
+    I agree that this may be not the most efficient, object-oriented and
+    scalable way of styling, but most of steps have quite a custom look
+    and typography tricks here and there, so they had to be styled separately.
+
+    First is the title step with a big &lt;h1&gt; (no room for padding) and some
+    3D positioning along Z axis.
+*/</span>
+
+<span class="hljs-selector-id">#title</span> {
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-selector-id">#title</span> <span class="hljs-selector-class">.try</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">64px</span>;
+    <span class="hljs-attribute">position</span>: absolute;
+    <span class="hljs-attribute">top</span>: -<span class="hljs-number">0.5em</span>;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">1.5em</span>;
+
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(20px);
+}
+
+<span class="hljs-selector-id">#title</span> <span class="hljs-selector-tag">h1</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">190px</span>;
+
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(50px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(50px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(50px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(50px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(50px);
+}
+
+<span class="hljs-selector-id">#title</span> <span class="hljs-selector-class">.footnote</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">32px</span>;
+}
+
+<span class="hljs-comment">/*
+    Second step is nothing special, just a text with a link, so it doesn't need
+    any special styling.
+
+    Let's move to 'big thoughts' with centered text and custom font sizes.
+*/</span>
+<span class="hljs-selector-id">#big</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">600px</span>;
+    <span class="hljs-attribute">text-align</span>: center;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">60px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-selector-id">#big</span> <span class="hljs-selector-tag">b</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">250px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">250px</span>;
+}
+
+<span class="hljs-selector-id">#big</span> <span class="hljs-selector-class">.thoughts</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">90px</span>;
+    <span class="hljs-attribute">line-height</span>: <span class="hljs-number">150px</span>;
+}
+
+<span class="hljs-comment">/*
+    'Tiny ideas' just need some tiny styling.
+*/</span>
+<span class="hljs-selector-id">#tiny</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span>;
+    <span class="hljs-attribute">text-align</span>: center;
+}
+
+<span class="hljs-comment">/*
+    This step has some animated text ...
+*/</span>
+<span class="hljs-selector-id">#ing</span> { <span class="hljs-attribute">width</span>: <span class="hljs-number">500px</span> }
+
+<span class="hljs-comment">/*
+    ... so we define display to `inline-block` to enable transforms and
+    transition duration to 0.5s ...
+*/</span>
+<span class="hljs-selector-id">#ing</span> <span class="hljs-selector-tag">b</span> {
+    <span class="hljs-attribute">display</span>: inline-block;
+    <span class="hljs-attribute">-webkit-transition</span>: <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">transition</span>:         <span class="hljs-number">0.5s</span>;
+}
+
+<span class="hljs-comment">/*
+    ... and we want 'positioning` word to move up a bit when the step gets
+    `present` class ...
+*/</span>
+<span class="hljs-selector-id">#ing</span><span class="hljs-selector-class">.present</span> <span class="hljs-selector-class">.positioning</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateY</span>(-10px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateY</span>(-10px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateY</span>(-10px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateY</span>(-10px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateY</span>(-10px);
+}
+
+<span class="hljs-comment">/*
+    ... 'rotating' to rotate a quarter of a second later ...
+*/</span>
+<span class="hljs-selector-id">#ing</span><span class="hljs-selector-class">.present</span> <span class="hljs-selector-class">.rotating</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">rotate</span>(-10deg);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">rotate</span>(-10deg);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">rotate</span>(-10deg);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">rotate</span>(-10deg);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">rotate</span>(-10deg);
+
+    <span class="hljs-attribute">-webkit-transition-delay</span>: <span class="hljs-number">0.25s</span>;
+    <span class="hljs-attribute">-moz-transition-delay</span>:    <span class="hljs-number">0.25s</span>;
+    <span class="hljs-attribute">-ms-transition-delay</span>:     <span class="hljs-number">0.25s</span>;
+    <span class="hljs-attribute">-o-transition-delay</span>:      <span class="hljs-number">0.25s</span>;
+    <span class="hljs-attribute">transition-delay</span>:         <span class="hljs-number">0.25s</span>;
+}
+
+<span class="hljs-comment">/*
+    ... and 'scaling' to scale down after another quarter of a second.
+*/</span>
+<span class="hljs-selector-id">#ing</span><span class="hljs-selector-class">.present</span> <span class="hljs-selector-class">.scaling</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">scale</span>(0.7);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">scale</span>(0.7);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">scale</span>(0.7);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">scale</span>(0.7);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">scale</span>(0.7);
+
+    <span class="hljs-attribute">-webkit-transition-delay</span>: <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-moz-transition-delay</span>:    <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-ms-transition-delay</span>:     <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-o-transition-delay</span>:      <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">transition-delay</span>:         <span class="hljs-number">0.5s</span>;
+}
+
+<span class="hljs-comment">/*
+    The 'imagination' step is again some boring font-sizing.
+*/</span>
+
+<span class="hljs-selector-id">#imagination</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">600px</span>;
+}
+
+<span class="hljs-selector-id">#imagination</span> <span class="hljs-selector-class">.imagination</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">78px</span>;
+}
+
+<span class="hljs-comment">/*
+    There is nothing really special about 'use the source, Luke' step, too,
+    except maybe of the Yoda background.
+
+    As you can see below I've 'hard-coded' it in data URL.
+    That's not the best way to serve images, but because that's just this one
+    I decided it will be OK to have it this way.
+
+    Just make sure you don't blindly copy this approach.
+*/</span>
+<span class="hljs-selector-id">#source</span> {
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">700px</span>;
+    <span class="hljs-attribute">padding-bottom</span>: <span class="hljs-number">300px</span>;
+
+    <span class="hljs-comment">/* Yoda Icon :: Pixel Art from Star Wars http://www.pixeljoint.com/pixelart/1423.htm */</span>
+    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">url</span>(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAAEYCAMAAACwUBm+AAAAAXNSR0IArs4c6QAAAKtQTFRFsAAAvbWSLUUrLEQqY1s8UYJMqJ1vNTEgOiIdIzYhjIFVLhsXZ6lgSEIsP2U8JhcCVzMsSXZEgXdOO145XJdWOl03LzAYMk4vSXNExr+hwcuxRTs1Qmk+RW9Am49eFRANQz4pUoNMQWc+OSMDTz0wLBsCNVMxa2NBOyUDUoNNSnlEWo9VRGxAVzYFl6tXCggHbLNmMUIcHhwTXkk5f3VNRT8wUT8xAAAACQocRBWFFwAAAAF0Uk5TAEDm2GYAAAPCSURBVHja7d3JctNAFIZRMwRCCGEmzPM8z/D+T8bu/ptbXXJFdij5fMt2Wuo+2UgqxVmtttq5WVotLzBgwIABAwYMGDCn0qVqbo69psPqVpWx+1XG5iaavF8wYMCAAQMGDBgwi4DJ6Y6qkxB1HNlcN3a92gbR5P2CAQMGDBgwYMCAWSxMlrU+UY5yu2l9okfV4bAxUVbf7TJnAwMGDBgwYMCAAbMLMHeqbGR82Zy+VR1Ht81nVca6R+UdTLaU24Ruzd3qM/e4yjnAgAEDBgwYMGDA7AJMd1l/3NRdVGcj3eX/2WEhCmDGxnM7yqygu8XIPjJj8iN/MGDAgAEDBgwYMAuDGb8q0RGlLCHLv1t9qDKWn3vdNHVuEI6HPaxO9Jo3GDBgwIABAwYMmIXBdC9ShGgMk+XnkXUeuGcsP/e1+lhNnZsL/G5Vs3OAAQMGDBgwYMCAWSxMR3SzOmraG5atdy9wZKzb+vg16qyqe2FltbnAgAEDBgwYMGDALAxmTJSuN3WA76rnVca6GTnemGN1WoEBAwYMGDBgwIBZGMxUomy4+xO899V4LAg5Xnc2MGDAgAEDBgwYMGA218Wq+2K1LDqvY9xZu8zN8fICdM6btYABAwYMGDBgwIABMzfH0+pGU5afze2tXebmeAfVz+p8BQYMGDBgwIABAwbMPBzZ+oWmfJrln1273FhkbHzee9WWbw7AgAEDBgwYMGDALAKm43hcdctKgblcPamOhuXnXlY5Xs6bsW4FGyQCAwYMGDBgwIABswiYMceZKgvMo+h8mrHLTdn676rj+FEFoTtHd8MwOxEYMGDAgAEDBgyYRcBM5UhXqiymW3R3c9ARhWO/OmjqfjVZy+xEYMCAAQMGDBgwYBYG073OnCV0RFNhMhaOa9WfKmOB6XjHMN1tQmaAAQMGDBgwYMCA2VWY7vXjz1U4croAzgPztwIDBgwYMGDAgAEDZhswh035NBw59Dww3RgYMGDAgAEDBgwYMJuD6f4tXT7NUqfCdBvZLkxXdgQGDBgwYMCAAQNmt2DGj8WzwAfV/w7T/aq7mxwwYMCAAQMGDBgwuwqTOo7uTwTngflSzQ3TdaJvAwEDBgwYMGDAgAED5gSvgbyo5oHZ4Pc+gwEDBgwYMGDAgAEzhOm+5G0qTGaAAQMGDBgwYMCAAXNaMOcnls3tNwWm+zRzp54NDBgwYMCAAQMGDJh5YNL36k1TLuGvVq+qnKMbS5n7tulT9asCAwYMGDBgwIABA2ZumKuztLnjgQEDBgwYMGDAgNl5mH/4/ltKA6vBNAAAAABJRU5ErkJggg==);
+    <span class="hljs-attribute">background-position</span>: bottom right;
+    <span class="hljs-attribute">background-repeat</span>: no-repeat;
+}
+
+<span class="hljs-selector-id">#source</span> <span class="hljs-selector-tag">q</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">60px</span>;
+}
+
+<span class="hljs-comment">/*
+    And the "it's in 3D" step again brings some 3D typography - just for fun.
+
+    Because we want to position &lt;span&gt; elements in 3D we set transform-style to
+    `preserve-3d` on the paragraph.
+    It is not needed by webkit browsers, but it is in Firefox. It's hard to say
+    which behaviour is correct as 3D transforms spec is not very clear about it.
+*/</span>
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-tag">p</span> {
+    <span class="hljs-attribute">-webkit-transform-style</span>: preserve-<span class="hljs-number">3</span>d;
+    <span class="hljs-attribute">-moz-transform-style</span>:    preserve-<span class="hljs-number">3</span>d; <span class="hljs-comment">/* Y U need this Firefox?! */</span>
+    <span class="hljs-attribute">-ms-transform-style</span>:     preserve-<span class="hljs-number">3</span>d;
+    <span class="hljs-attribute">-o-transform-style</span>:      preserve-<span class="hljs-number">3</span>d;
+    <span class="hljs-attribute">transform-style</span>:         preserve-<span class="hljs-number">3</span>d;
+}
+
+<span class="hljs-comment">/*
+    Below we position each word separately along Z axis and we want it to transition
+    to default position in 0.5s when the step gets `present` class.
+
+    Quite a simple idea, but lot's of styles and prefixes.
+*/</span>
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-tag">span</span>,
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-tag">b</span> {
+    <span class="hljs-attribute">display</span>: inline-block;
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(40px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(40px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(40px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(40px);
+     <span class="hljs-attribute">transform</span>:        <span class="hljs-built_in">translateZ</span>(40px);
+
+    <span class="hljs-attribute">-webkit-transition</span>: <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      <span class="hljs-number">0.5s</span>;
+    <span class="hljs-attribute">transition</span>:         <span class="hljs-number">0.5s</span>;
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.have</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(-40px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.you</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(20px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(20px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.noticed</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(-40px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(-40px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.its</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(60px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(60px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(60px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(60px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(60px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.in</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(-10px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span> <span class="hljs-selector-class">.footnote</span> {
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">32px</span>;
+
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(-10px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(-10px);
+}
+
+<span class="hljs-selector-id">#its-in-3d</span><span class="hljs-selector-class">.present</span> <span class="hljs-selector-tag">span</span>,
+<span class="hljs-selector-id">#its-in-3d</span><span class="hljs-selector-class">.present</span> <span class="hljs-selector-tag">b</span> {
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateZ</span>(0px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateZ</span>(0px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateZ</span>(0px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateZ</span>(0px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateZ</span>(0px);
+}
+
+<span class="hljs-comment">/*
+    The last step is an overview.
+    There is no content in it, so we make sure it's not visible because we want
+    to be able to click on other steps.
+
+*/</span>
+<span class="hljs-selector-id">#overview</span> { <span class="hljs-attribute">display</span>: none }
+
+<span class="hljs-comment">/*
+    We also make other steps visible and give them a pointer cursor using the
+    `impress-on-` class.
+*/</span>
+<span class="hljs-selector-class">.impress-on-overview</span> <span class="hljs-selector-class">.step</span> {
+    <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;
+    <span class="hljs-attribute">cursor</span>: pointer;
+}
+
+
+<span class="hljs-comment">/*
+    Now, when we have all the steps styled let's give users a hint how to navigate
+    around the presentation.
+
+    The best way to do this would be to use JavaScript, show a delayed hint for a
+    first time users, then hide it and store a status in cookie or localStorage...
+
+    But I wanted to have some CSS fun and avoid additional scripting...
+
+    Let me explain it first, so maybe the transition magic will be more readable
+    when you read the code.
+
+    First of all I wanted the hint to appear only when user is idle for a while.
+    You can't detect the 'idle' state in CSS, but I delayed a appearing of the
+    hint by 5s using transition-delay.
+
+    You also can't detect in CSS if the user is a first-time visitor, so I had to
+    make an assumption that I'll only show the hint on the first step. And when
+    the step is changed hide the hint, because I can assume that user already
+    knows how to navigate.
+
+    To summarize it - hint is shown when the user is on the first step for longer
+    than 5 seconds.
+
+    The other problem I had was caused by the fact that I wanted the hint to fade
+    in and out. It can be easily achieved by transitioning the opacity property.
+    But that also meant that the hint was always on the screen, even if totally
+    transparent. It covered part of the screen and you couldn't correctly clicked
+    through it.
+    Unfortunately you cannot transition between display `block` and `none` in pure
+    CSS, so I needed a way to not only fade out the hint but also move it out of
+    the screen.
+
+    I solved this problem by positioning the hint below the bottom of the screen
+    with CSS transform and moving it up to show it. But I also didn't want this move
+    to be visible. I wanted the hint only to fade in and out visually, so I delayed
+    the fade in transition, so it starts when the hint is already in its correct
+    position on the screen.
+
+    I know, it sounds complicated ... maybe it would be easier with the code?
+*/</span>
+
+<span class="hljs-selector-class">.hint</span> {
+    <span class="hljs-comment">/*
+        We hide the hint until presentation is started and from browsers not supporting
+        impress.js, as they will have a linear scrollable view ...
+    */</span>
+    <span class="hljs-attribute">display</span>: none;
+
+    <span class="hljs-comment">/*
+        ... and give it some fixed position and nice styles.
+    */</span>
+    <span class="hljs-attribute">position</span>: fixed;
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">right</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">bottom</span>: <span class="hljs-number">200px</span>;
+
+    <span class="hljs-attribute">background</span>: <span class="hljs-built_in">rgba</span>(0,0,0,0.5);
+    <span class="hljs-attribute">color</span>: <span class="hljs-number">#EEE</span>;
+    <span class="hljs-attribute">text-align</span>: center;
+
+    <span class="hljs-attribute">font-size</span>: <span class="hljs-number">50px</span>;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span>;
+
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">100</span>;
+
+    <span class="hljs-comment">/*
+        By default we don't want the hint to be visible, so we make it transparent ...
+    */</span>
+    <span class="hljs-attribute">opacity</span>: <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">/*
+        ... and position it below the bottom of the screen (relative to it's fixed position)
+    */</span>
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateY</span>(400px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateY</span>(400px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateY</span>(400px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateY</span>(400px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateY</span>(400px);
+
+    <span class="hljs-comment">/*
+        Now let's imagine that the hint is visible and we want to fade it out and move out
+        of the screen.
+
+        So we define the transition on the opacity property with 1s duration and another
+        transition on transform property delayed by 1s so it will happen after the fade out
+        on opacity finished.
+
+        This way user will not see the hint moving down.
+    */</span>
+    <span class="hljs-attribute">-webkit-transition</span>: opacity <span class="hljs-number">1s</span>, -webkit-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    opacity <span class="hljs-number">1s</span>,    -moz-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     opacity <span class="hljs-number">1s</span>,     -ms-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      opacity <span class="hljs-number">1s</span>,      -o-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">1s</span>;
+    <span class="hljs-attribute">transition</span>:         opacity <span class="hljs-number">1s</span>,         transform <span class="hljs-number">0.5s</span> <span class="hljs-number">1s</span>;
+}
+
+<span class="hljs-comment">/*
+    Now we 'enable' the hint when presentation is initialized ...
+*/</span>
+<span class="hljs-selector-class">.impress-enabled</span> <span class="hljs-selector-class">.hint</span> { <span class="hljs-attribute">display</span>: block }
+
+<span class="hljs-comment">/*
+    ... and we will show it when the first step (with id 'bored') is active.
+*/</span>
+<span class="hljs-selector-class">.impress-on-bored</span> <span class="hljs-selector-class">.hint</span> {
+    <span class="hljs-comment">/*
+        We remove the transparency and position the hint in its default fixed
+        position.
+    */</span>
+    <span class="hljs-attribute">opacity</span>: <span class="hljs-number">1</span>;
+
+    <span class="hljs-attribute">-webkit-transform</span>: <span class="hljs-built_in">translateY</span>(0px);
+    <span class="hljs-attribute">-moz-transform</span>:    <span class="hljs-built_in">translateY</span>(0px);
+    <span class="hljs-attribute">-ms-transform</span>:     <span class="hljs-built_in">translateY</span>(0px);
+    <span class="hljs-attribute">-o-transform</span>:      <span class="hljs-built_in">translateY</span>(0px);
+    <span class="hljs-attribute">transform</span>:         <span class="hljs-built_in">translateY</span>(0px);
+
+    <span class="hljs-comment">/*
+        Now for fade in transition we have the oposite situation from the one
+        above.
+
+        First after 4.5s delay we animate the transform property to move the hint
+        into its correct position and after that we fade it in with opacity
+        transition.
+    */</span>
+    <span class="hljs-attribute">-webkit-transition</span>: opacity <span class="hljs-number">1s</span> <span class="hljs-number">5s</span>, -webkit-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">4.5s</span>;
+    <span class="hljs-attribute">-moz-transition</span>:    opacity <span class="hljs-number">1s</span> <span class="hljs-number">5s</span>,    -moz-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">4.5s</span>;
+    <span class="hljs-attribute">-ms-transition</span>:     opacity <span class="hljs-number">1s</span> <span class="hljs-number">5s</span>,     -ms-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">4.5s</span>;
+    <span class="hljs-attribute">-o-transition</span>:      opacity <span class="hljs-number">1s</span> <span class="hljs-number">5s</span>,      -o-transform <span class="hljs-number">0.5s</span> <span class="hljs-number">4.5s</span>;
+    <span class="hljs-attribute">transition</span>:         opacity <span class="hljs-number">1s</span> <span class="hljs-number">5s</span>,         transform <span class="hljs-number">0.5s</span> <span class="hljs-number">4.5s</span>;
+}
+
+<span class="hljs-comment">/*
+    And as the last thing there is a workaround for quite strange bug.
+    It happens a lot in Chrome. I don't remember if I've seen it in Firefox.
+
+    Sometimes the element positioned in 3D (especially when it's moved back
+    along Z axis) is not clickable, because it falls 'behind' the &lt;body&gt;
+    element.
+
+    To prevent this, I decided to make &lt;body&gt; non clickable by setting
+    pointer-events property to `none` value.
+    Value if this property is inherited, so to make everything else clickable
+    I bring it back on the #impress element.
+
+    If you want to know more about `pointer-events` here are some docs:
+    https://developer.mozilla.org/en/CSS/pointer-events
+
+    There is one very important thing to notice about this workaround - it makes
+    everything 'unclickable' except what's in #impress element.
+
+    So use it wisely ... or don't use at all.
+*/</span>
+<span class="hljs-selector-class">.impress-enabled</span>          { <span class="hljs-attribute">pointer-events</span>: none }
+<span class="hljs-selector-class">.impress-enabled</span> <span class="hljs-selector-id">#impress</span> { <span class="hljs-attribute">pointer-events</span>: auto }
+
+<span class="hljs-comment">/*
+    There is one funny thing I just realized.
+
+    Thanks to this workaround above everything except #impress element is invisible
+    for click events. That means that the hint element is also not clickable.
+    So basically all of this transforms and delayed transitions trickery was probably
+    not needed at all...
+
+    But it was fun to learn about it, wasn't it?
+*/</span>
+
+<span class="hljs-comment">/*
+    That's all I have for you in this file.
+    Thanks for reading. I hope you enjoyed it at least as much as I enjoyed writing it
+    for you.
+*/</span></code></pre>    </article>
+  </body>
+</html>
