@@ -17,7 +17,7 @@ const string false_string = "false";
 // io
 // todo: refactor with generics
 
-void put_bool();
+void put_bool(bool x);
 void put_char(char x);
 void put_int(int x);
 void put_float(float x);
